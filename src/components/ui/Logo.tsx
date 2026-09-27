@@ -1,21 +1,51 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-/** Wordmark: "mailisto" with a lime square as the mark (an envelope reduced to its simplest form). */
-export function Logo({ className, tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
+/** Brand logo: /logo.png on light backgrounds, /white-logo.png on black/dark backgrounds. */
+export function Logo({
+  className,
+  tone = "dark",
+  priority = false,
+}: {
+  className?: string;
+  tone?: "dark" | "light";
+  priority?: boolean;
+}) {
   return (
-    <Link href="/" aria-label="Mailisto home" className={cn("inline-flex items-center gap-2", className)}>
-      <LogoMark />
-      <span className={cn("text-[1.3rem] font-semibold tracking-[-0.04em]", tone === "light" ? "text-white" : "text-ink")}>mailisto</span>
+    <Link
+      href="/"
+      aria-label="Mailisto home"
+      className={cn("inline-flex items-center", className)}
+    >
+      <Image
+        src={tone === "light" ? "/white-logo.png" : "/logo.png"}
+        alt="Mailisto"
+        width={300}
+        height={200}
+        priority={priority}
+        className="w-40sm:h-8"
+      />
     </Link>
   );
 }
 
-export function LogoMark({ size = 22 }: { size?: number }) {
+/** Logo image for places that aren't a link (e.g. the admin sidebar, which wraps it in its own link). */
+export function LogoMark({
+  tone = "light",
+  className,
+}: {
+  tone?: "dark" | "light";
+  className?: string;
+  size?: number;
+}) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-      <rect width="24" height="24" rx="2" fill="#B8FA3C" />
-      <path d="M5 8l7 5 7-5" fill="none" stroke="#000" strokeWidth="2" />
-    </svg>
+    <Image
+      src={tone === "light" ? "/white-logo.png" : "/logo.png"}
+      alt="Mailisto"
+      width={160}
+      height={40}
+      className={cn("h-6 w-auto", className)}
+    />
   );
 }

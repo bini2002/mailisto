@@ -38,8 +38,16 @@ const columns = [
 export async function Footer() {
   const settings = await getSiteSettings();
   const socials = [
-    { href: safeUrl(settings.linkedin_url), label: "LinkedIn", Icon: FaLinkedinIn },
-    { href: safeUrl(settings.instagram_url), label: "Instagram", Icon: FaInstagram },
+    {
+      href: safeUrl(settings.linkedin_url),
+      label: "LinkedIn",
+      Icon: FaLinkedinIn,
+    },
+    {
+      href: safeUrl(settings.instagram_url),
+      label: "Instagram",
+      Icon: FaInstagram,
+    },
     { href: safeUrl(settings.x_url), label: "X", Icon: FaXTwitter },
   ].filter((s) => s.href);
   const email = settings.contact_email;
@@ -51,13 +59,21 @@ export async function Footer() {
           <div className="lg:col-span-5">
             <Logo tone="light" />
             <p className="mt-6 max-w-sm text-[1.05rem] leading-relaxed text-muted-dark">
-              A Klaviyo email agency for Shopify brands. We build and run the flows, campaigns and segmentation that turn your list into repeat revenue.
+              A Klaviyo email agency for Shopify brands. We build and run the
+              flows, campaigns and segmentation that turn your list into repeat
+              revenue.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href={auditCta.href} className="label inline-flex h-11 items-center bg-lime px-4 text-ink transition-colors hover:bg-lime-deep">
+              <Link
+                href={auditCta.href}
+                className="label inline-flex h-11 items-center bg-lime px-4 text-ink transition-colors hover:bg-lime-deep"
+              >
                 {auditCta.label}
               </Link>
-              <Link href={talkCta.href} className="label inline-flex h-11 items-center border border-line-dark px-4 transition-colors hover:border-white">
+              <Link
+                href={talkCta.href}
+                className="label inline-flex h-11 items-center border border-line-dark px-4 transition-colors hover:border-white"
+              >
                 {talkCta.label}
               </Link>
             </div>
@@ -70,7 +86,10 @@ export async function Footer() {
                 <ul className="mt-5 space-y-3 text-[0.95rem]">
                   {col.links.map((l) => (
                     <li key={l.label}>
-                      <Link href={l.href} className="text-white/85 transition-colors hover:text-lime">
+                      <Link
+                        href={l.href}
+                        className="text-white/85 transition-colors hover:text-lime"
+                      >
                         {l.label}
                       </Link>
                     </li>
@@ -82,13 +101,19 @@ export async function Footer() {
               <h2 className="label text-muted-dark">Contact</h2>
               <ul className="mt-5 space-y-3 text-[0.95rem]">
                 <li>
-                  <Link href="/contact" className="text-white/85 transition-colors hover:text-lime">
+                  <Link
+                    href="/contact"
+                    className="text-white/85 transition-colors hover:text-lime"
+                  >
                     Send a message
                   </Link>
                 </li>
                 {email && (
                   <li>
-                    <a href={`mailto:${email}`} className="break-all text-white/85 transition-colors hover:text-lime">
+                    <a
+                      href={`mailto:${email}`}
+                      className="break-all text-white/85 transition-colors hover:text-lime"
+                    >
                       {email}
                     </a>
                   </li>
@@ -115,13 +140,17 @@ export async function Footer() {
           </div>
         </div>
 
-        <p aria-hidden="true" className="mt-20 select-none text-[clamp(3.5rem,15vw,13rem)] leading-[0.8] font-semibold tracking-[-0.06em] text-ink-4">
+        <p
+          aria-hidden="true"
+          className="mt-20 select-none text-[clamp(3.5rem,15vw,13rem)] leading-[0.8] font-semibold tracking-[-0.06em] text-ink-4"
+        >
           mailisto
         </p>
 
         <div className="mt-8 flex flex-col gap-4 border-t border-line-dark pt-6 text-sm text-muted-dark sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}. Klaviyo email marketing for ecommerce.
+            © {new Date().getFullYear()} {site.name}. Klaviyo email marketing
+            for ecommerce.
           </p>
           <ul className="flex gap-6">
             <li>

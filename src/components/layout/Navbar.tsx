@@ -13,8 +13,11 @@ export function Navbar() {
       >
         Skip to content
       </a>
-      <nav aria-label="Main" className="container-x flex h-16 items-center justify-between gap-4">
-        <Logo />
+      <nav
+        aria-label="Main"
+        className="container-x flex h-16 items-center justify-between gap-4"
+      >
+        <Logo className="w-40" />
         <ul className="hidden items-center gap-1 lg:flex">
           {mainNav.map((item) => (
             <li key={item.href}>
