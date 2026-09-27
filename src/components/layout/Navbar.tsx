@@ -1,0 +1,44 @@
+import Link from "next/link";
+import { auditCta, mainNav } from "@/lib/site";
+import { LinkButton } from "../ui/Button";
+import { Logo } from "../ui/Logo";
+import { MobileMenu } from "./MobileMenu";
+
+export function Navbar() {
+  return (
+    <header className="sticky top-0 z-40 border-b border-line bg-paper">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-white"
+      >
+        Skip to content
+      </a>
+      <nav aria-label="Main" className="container-x flex h-16 items-center justify-between gap-4">
+        <Logo />
+        <ul className="hidden items-center gap-1 lg:flex">
+          {mainNav.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className="rounded-xs px-3.5 py-2 text-[0.92rem] text-ink/75 transition-colors hover:bg-paper-2 hover:text-ink"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center gap-2">
+          <span className="hidden sm:block">
+            <LinkButton href={auditCta.href} size="sm" arrow>
+              {auditCta.label}
+            </LinkButton>
+          </span>
+          <LinkButton href={auditCta.href} size="sm" className="px-3 sm:hidden">
+            Free Audit
+          </LinkButton>
+          <MobileMenu />
+        </div>
+      </nav>
+    </header>
+  );
+}
