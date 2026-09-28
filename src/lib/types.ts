@@ -113,4 +113,4 @@ export interface ContactSubmission {
   created_at: string;
 }
 
-export type SiteSettings = Partial<Record<"contact_email" | "linkedin_url" | "instagram_url" | "x_url", string>>;
+export type SiteSettings = Partial<Record<"contact_email" | "linkedin_url" | "instagram_url" | "x_url" | "calendly_url", string>>;

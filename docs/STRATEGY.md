@@ -67,7 +67,8 @@ The hero eyebrow ("Klaviyo email agency · For Shopify brands") and the subheadl
 | Hero subheadline | Mailisto builds and runs the Klaviyo flows, campaigns and segmentation that turn your customer data into repeat purchases, and revenue you can measure. |
 | Primary CTA | Get a Free Audit |
 | Secondary CTA | Let's Talk |
-| CTA microcopy | A free, practical review of your Klaviyo account. No obligation. |
+| CTA microcopy | A free, practical review of your Klaviyo account, delivered within 48 hours. No obligation. |
+| Audit CTA badge | Every "Get a Free Audit" button carries a **48h** tag. The audit section and /audit page show a 48-hour timeline (request → access → written findings). |
 | Positioning strip | Klaviyo-focused. Ecommerce-native. Revenue-driven. · Shopify data → Klaviyo → Flows + campaigns → Repeat purchases → Revenue |
 | 01 Problem | Most email lists are underworked. |
 | 02 Services | Everything your Klaviyo channel needs to perform. |
@@ -76,9 +77,7 @@ The hero eyebrow ("Klaviyo email agency · For Shopify brands") and the subheadl
 | 05 Design Lab | Email that looks good. Email that sells. |
 | 06 Audit | Your Klaviyo account probably has revenue hiding in it. |
 | 07 About | We focus on one thing: making ecommerce email work harder. |
-| 08 Principles | How we work. |
-| 09 FAQ | Good questions to ask. |
-| 10 Blog | Notes on Klaviyo, retention and ecommerce email. |
+| 08 Blog | Notes on Klaviyo, retention and ecommerce email. |
 | Final CTA | Find out what your list could be earning. |
 | Contact page | Let's make email work harder. |
 | Footer | A Klaviyo email agency for Shopify brands. We build and run the flows, campaigns and segmentation that turn your list into repeat revenue. |
@@ -129,7 +128,7 @@ Safeguards built into the database:
 - **Radius:** 2–3px. Nothing pill-shaped or bubbly.
 - **Elevation:** none. Hierarchy comes from borders, contrast and space.
 - **Grids:** 12 columns. Headlines on 7 columns, intros on 5 (a split editorial layout). Hairline grids (`gap-px` on a line colour) instead of stacks of cards.
-- **Motion:** CSS only. A hero fade-up on load, scroll-driven reveals (no JS) and 200ms hover transitions. All of it is disabled under `prefers-reduced-motion`.
+- **Motion:** a hero fade-up on load, staggered scroll reveals (a tiny IntersectionObserver), lines that draw in, and a "LED" light that travels around every CTA border (faster on hover). All of it is disabled under `prefers-reduced-motion`, and content is never hidden when JS is off.
 - **No:** gradients (the one hard-stop band in `.mark` is a highlighter, not a visual gradient), glassmorphism, glow, blobs, stock photography or shadows.
 
 ### Email previews
@@ -164,8 +163,8 @@ Conversion hierarchy: **Get a Free Audit** (nav, hero, problem section, work sec
 | What does Mailisto do? | Hero subheadline, first screen. |
 | Is it specifically for ecommerce? | Eyebrow "For Shopify brands" and the positioning strip. |
 | Is Klaviyo a core specialisation? | Eyebrow "Klaviyo email agency", subheadline and strip. |
-| Revenue, not vanity metrics? | Headline, strip ("Revenue-driven"), principle 01. |
+| Revenue, not vanity metrics? | Headline, strip ("Revenue-driven"), About section. |
 | What exactly can they do for my store? | Services (5 groups) and the lifecycle system. |
 | Why trust them? | Annotated hero email, system thinking, process outputs, Design Lab, audit scope and articles. No fake proof. |
-| What happens if I request the audit? | Audit section ("What you get"), /audit steps, FAQ and the success state. |
-| How do I contact them? | "Let's Talk" in the hero, final CTA, footer and /contact. |
+| What happens if I request the audit? | 48-hour timeline, audit section ("What you get"), /audit steps and the success state. |
+| How do I contact them? | "Let's Talk" in the hero, final CTA, footer and /contact (message or book a call via Calendly). |

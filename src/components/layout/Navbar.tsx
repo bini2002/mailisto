@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { auditCta, mainNav } from "@/lib/site";
-import { LinkButton } from "../ui/Button";
+import { AuditBadge, LinkButton } from "../ui/Button";
 import { Logo } from "../ui/Logo";
 import { MobileMenu } from "./MobileMenu";
 
@@ -17,7 +17,7 @@ export function Navbar() {
         aria-label="Main"
         className="container-x flex h-16 items-center justify-between gap-4"
       >
-        <Logo className="w-40" />
+        <Logo className="w-28 min-[380px]:w-32 sm:w-40" priority />
         <ul className="hidden items-center gap-1 lg:flex">
           {mainNav.map((item) => (
             <li key={item.href}>
@@ -34,10 +34,12 @@ export function Navbar() {
           <span className="hidden sm:block">
             <LinkButton href={auditCta.href} size="sm" arrow>
               {auditCta.label}
+              <AuditBadge />
             </LinkButton>
           </span>
-          <LinkButton href={auditCta.href} size="sm" className="px-3 sm:hidden">
+          <LinkButton href={auditCta.href} size="sm" className="gap-1.5 px-3 sm:hidden">
             Free Audit
+            <AuditBadge className="max-[379px]:hidden" />
           </LinkButton>
           <MobileMenu />
         </div>

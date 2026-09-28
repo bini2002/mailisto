@@ -11,7 +11,7 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { rateLimit } from "@/lib/rate-limit";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { AUDIT_STATUSES, CONTACT_STATUSES, DESIGN_TAGS, type CaseStudyResult } from "@/lib/types";
-import { safeUrl, slugify } from "@/lib/utils";
+import { calendlyUrl, safeUrl, slugify } from "@/lib/utils";
 import { clean } from "@/lib/validation";
 
 export interface AdminResult {
@@ -396,6 +396,11 @@ export async function saveSettings(fd: FormData): Promise<AdminResult> {
     { key: "x_url", value: urlOrNull("x_url") },
   ];
   if (rows.some((r) => r.value === undefined)) return { ok: false, message: "Social links must be full https:// URLs." };
+
+  const calendlyRaw = str(fd, "calendly_url", 300);
+  const calendly = calendlyRaw ? calendlyUrl(calendlyRaw) : null;
+  if (calendlyRaw && !calendly) return { ok: false, message: "Calendly link must look like https://calendly.com/your-name/30min" };
+  rows.push({ key: "calendly_url", value: calendly });
 
   const { error } = await supabase.from("site_settings").upsert(rows);
   if (error) return dbError(error.message);

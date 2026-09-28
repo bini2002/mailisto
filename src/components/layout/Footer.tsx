@@ -4,6 +4,7 @@ import { getSiteSettings } from "@/lib/data";
 import { auditCta, site, talkCta } from "@/lib/site";
 import { safeUrl } from "@/lib/utils";
 import { Logo } from "../ui/Logo";
+import { AuditBadge } from "../ui/Button";
 
 const columns = [
   {
@@ -57,7 +58,7 @@ export async function Footer() {
       <div className="container-x pt-20 pb-10">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <Logo tone="light" />
+            <Logo tone="light" className="w-48" />
             <p className="mt-6 max-w-sm text-[1.05rem] leading-relaxed text-muted-dark">
               A Klaviyo email agency for Shopify brands. We build and run the
               flows, campaigns and segmentation that turn your list into repeat
@@ -66,13 +67,14 @@ export async function Footer() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href={auditCta.href}
-                className="label inline-flex h-11 items-center bg-lime px-4 text-ink transition-colors hover:bg-lime-deep"
+                className="beam beam-primary label inline-flex h-11 items-center gap-2 rounded-xs bg-lime px-4 text-ink transition-colors hover:bg-lime-deep"
               >
                 {auditCta.label}
+                <AuditBadge />
               </Link>
               <Link
                 href={talkCta.href}
-                className="label inline-flex h-11 items-center border border-line-dark px-4 transition-colors hover:border-white"
+                className="beam beam-outline-light label inline-flex h-11 items-center rounded-xs border border-line-dark px-4 transition-colors hover:border-white"
               >
                 {talkCta.label}
               </Link>

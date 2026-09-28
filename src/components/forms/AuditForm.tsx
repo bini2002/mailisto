@@ -12,7 +12,7 @@ import {
   validateAuditStep1,
   validateAuditStep2,
 } from "@/lib/validation";
-import { Button } from "../ui/Button";
+import { AuditBadge, Button } from "../ui/Button";
 import { ErrorState } from "../ui/States";
 import { Honeypot, SelectField, TextAreaField, TextField } from "./Field";
 
@@ -103,7 +103,7 @@ export function AuditForm({ idPrefix = "audit" }: { idPrefix?: string }) {
           </li>
           <li className="flex gap-4">
             <span className="label pt-1 text-muted">02</span>
-            <span>We work through the account and write up what we find.</span>
+            <span>Within 48 hours of getting access, we send you a written review of what we find.</span>
           </li>
           <li className="flex gap-4">
             <span className="label pt-1 text-muted">03</span>
@@ -166,7 +166,7 @@ export function AuditForm({ idPrefix = "audit" }: { idPrefix?: string }) {
           required
           maxLength={300}
         />
-        <Button type="submit" size="lg" className="mt-2 w-full" arrow>
+        <Button type="submit" size="lg" className="mt-2 w-full" arrow beam>
           Continue
         </Button>
       </fieldset>
@@ -194,8 +194,9 @@ export function AuditForm({ idPrefix = "audit" }: { idPrefix?: string }) {
           <Button type="button" variant="outline" size="lg" onClick={() => setStep(1)} disabled={pending}>
             Back
           </Button>
-          <Button type="submit" size="lg" className="flex-1" loading={pending} arrow>
+          <Button type="submit" size="lg" className="flex-1" loading={pending} arrow beam>
             {pending ? "Sending" : "Get My Free Audit"}
+            {!pending && <AuditBadge />}
           </Button>
         </div>
       </fieldset>

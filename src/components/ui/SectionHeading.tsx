@@ -20,10 +20,11 @@ export function SectionHeading({ index, label, title, intro, tone = "light", ali
   const dark = tone === "dark";
   return (
     <div className={cn("grid gap-6", align === "split" && "lg:grid-cols-12 lg:gap-12", className)}>
-      <div className={cn(align === "split" && "lg:col-span-7")}>
+      {/* heading and intro reveal separately, the intro slightly later */}
+      <div className={cn("reveal", align === "split" && "lg:col-span-7")}>
         <p className={cn("label flex items-center gap-3", dark ? "text-muted-dark" : "text-muted")}>
           {index && <span className={cn(dark ? "text-lime" : "text-ink")}>{index}</span>}
-          <span aria-hidden="true" className={cn("h-px w-8", dark ? "bg-line-dark" : "bg-line-strong")} />
+          <span aria-hidden="true" className={cn("reveal-line h-px w-8", dark ? "bg-lime" : "bg-ink")} />
           {label}
         </p>
         <h2 id={id} className={cn("mt-5 text-h2 font-semibold", dark ? "text-white" : "text-ink")}>
@@ -31,7 +32,7 @@ export function SectionHeading({ index, label, title, intro, tone = "light", ali
         </h2>
       </div>
       {intro && (
-        <div className={cn(align === "split" ? "lg:col-span-5 lg:self-end" : "max-w-2xl")}>
+        <div className={cn("reveal", align === "split" ? "lg:col-span-5 lg:self-end" : "max-w-2xl")}>
           <div className={cn("text-[1.05rem] leading-relaxed", dark ? "text-muted-dark" : "text-muted")}>{intro}</div>
         </div>
       )}

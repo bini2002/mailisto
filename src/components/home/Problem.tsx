@@ -35,12 +35,12 @@ export function Problem() {
               <p className="mt-2 text-[0.95rem] text-muted">{p.body}</p>
             </li>
           ))}
-          <li className="flex flex-col justify-between gap-6 bg-ink p-7 text-white sm:col-span-1 lg:col-span-2">
+          <li className="reveal flex flex-col justify-between gap-6 bg-ink p-7 text-white sm:col-span-1 lg:col-span-2">
             <p className="max-w-lg text-xl leading-snug font-medium tracking-tight">
               We fix this by treating email as a system: built properly, run consistently and measured by revenue.
             </p>
             <Link href="/audit" className="group label inline-flex items-center gap-2 text-lime">
-              See where your account stands
+              Get a free audit in 48 hours
               <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </li>

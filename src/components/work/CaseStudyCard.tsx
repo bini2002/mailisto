@@ -5,7 +5,7 @@ import type { CaseStudy } from "@/lib/types";
 export function CaseStudyCard({ study }: { study: CaseStudy }) {
   const results = (study.results ?? []).slice(0, 3);
   return (
-    <article className="group relative flex flex-col border border-line bg-white transition-colors hover:border-ink">
+    <article className="reveal group relative flex flex-col border border-line bg-white transition-colors hover:border-ink">
       {study.cover_image_url && (
         <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-paper-2">
           <Image src={study.cover_image_url} alt={study.cover_image_alt || `${study.client_name} case study`} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />

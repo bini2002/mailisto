@@ -15,6 +15,9 @@ export default async function SettingsPage() {
         <AdminSection title="Contact">
           <AdminInput name="contact_email" type="email" label="Public contact email" defaultValue={s.contact_email} placeholder="hello@mailisto.com" />
         </AdminSection>
+        <AdminSection title="Booking" description="Shown as a “Book a call” option on the contact page. Leave blank to hide.">
+          <AdminInput name="calendly_url" type="url" label="Calendly link" placeholder="https://calendly.com/your-name/30min" defaultValue={s.calendly_url} />
+        </AdminSection>
         <AdminSection title="Social links" description="Full https:// URLs.">
           <AdminInput name="linkedin_url" type="url" label="LinkedIn" defaultValue={s.linkedin_url} />
           <AdminInput name="instagram_url" type="url" label="Instagram" defaultValue={s.instagram_url} />

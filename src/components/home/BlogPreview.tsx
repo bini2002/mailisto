@@ -11,13 +11,13 @@ export async function BlogPreview() {
       <div className="container-x">
         <SectionHeading
           id="blog-title"
-          index="10"
+          index="08"
           label="From the blog"
           title="Notes on Klaviyo, retention and ecommerce email."
           intro={
             <>
               <p>Practical articles for founders and ecommerce teams. No filler.</p>
-              <LinkButton href="/blog" variant="outline" size="sm" className="mt-6" arrow>
+              <LinkButton href="/blog" variant="outline" size="sm" className="mt-6" arrow beam={false}>
                 All articles
               </LinkButton>
             </>
