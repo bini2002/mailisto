@@ -83,13 +83,30 @@ export function SelectField({ id, label, error, hint, options, placeholder = "Se
   );
 }
 
-/** Hidden from people and assistive tech; bots tend to fill it in. */
+/** Name of the hidden anti-spam field. Deliberately meaningless so browser autofill and password managers never fill it. */
+export const HONEYPOT_FIELD = "mls_hp_7f3";
+
+/**
+ * Hidden from people and assistive tech; naive bots fill every field.
+ * Never give it a name or label like "website", "url" or "email": autofill would fill it
+ * for real visitors and their submissions would be silently dropped.
+ */
 export function Honeypot() {
   return (
     <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
       <label>
-        Website
-        <input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+        Leave this empty
+        <input
+          type="text"
+          name={HONEYPOT_FIELD}
+          tabIndex={-1}
+          autoComplete="off"
+          defaultValue=""
+          data-1p-ignore="true"
+          data-lpignore="true"
+          data-bwignore="true"
+          data-form-type="other"
+        />
       </label>
     </div>
   );
