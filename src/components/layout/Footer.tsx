@@ -140,12 +140,14 @@ export async function Footer() {
           </div>
         </div>
 
-        <p
-          aria-hidden="true"
-          className="mt-20 select-none text-[clamp(3.5rem,15vw,13rem)] leading-[0.8] font-semibold tracking-[-0.06em] text-ink-4"
-        >
-          mailisto
-        </p>
+        <div className="flex items-center justify-center">
+          <p
+            aria-hidden="true"
+            className="mt-20 select-none text-[clamp(3.5rem,15vw,13rem)] leading-[0.8] font-semibold tracking-[-0.06em] text-ink-4"
+          >
+            mailisto
+          </p>
+        </div>
 
         <div className="mt-8 flex flex-col gap-4 border-t border-line-dark pt-6 text-sm text-muted-dark sm:flex-row sm:items-center sm:justify-between">
           <p>
