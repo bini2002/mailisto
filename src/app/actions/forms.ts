@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import type { FormState } from "@/lib/form-state";
 import { rateLimit } from "@/lib/rate-limit";
 import { getPublicSupabase } from "@/lib/supabase/public";
+import { HONEYPOT_FIELD } from "@/components/forms/Field";
 import { normaliseStoreUrl, readAuditInput, readContactInput, validateAudit, validateContact } from "@/lib/validation";
 
 const MIN_FILL_MS = 2500;
@@ -17,7 +18,7 @@ async function clientKey() {
 
 /** Returns a reason to silently drop the submission (bot), or null if it looks human. */
 function spamCheck(formData: FormData): "honeypot" | "too-fast" | null {
-  if (String(formData.get("website") ?? "").trim() !== "") return "honeypot";
+  if (String(formData.get(HONEYPOT_FIELD) ?? "").trim() !== "") return "honeypot";
   const started = Number(formData.get("started_at"));
   if (Number.isFinite(started) && started > 0 && Date.now() - started < MIN_FILL_MS) return "too-fast";
   return null;
@@ -30,7 +31,10 @@ function dbErrorMessage(message: string) {
 
 export async function submitAudit(_prev: FormState, formData: FormData): Promise<FormState> {
   const spam = spamCheck(formData);
-  if (spam === "honeypot") return { status: "success", name: "" };
+  if (spam === "honeypot") {
+    console.warn("[audit] dropped: honeypot field was filled");
+    return { status: "success", name: "" };
+  }
   if (spam === "too-fast") return { status: "error", message: "That was quick. Please check your details and submit again." };
 
   if (!rateLimit(`audit:${await clientKey()}`, 5)) {
@@ -67,7 +71,10 @@ export async function submitAudit(_prev: FormState, formData: FormData): Promise
 
 export async function submitContact(_prev: FormState, formData: FormData): Promise<FormState> {
   const spam = spamCheck(formData);
-  if (spam === "honeypot") return { status: "success", name: "" };
+  if (spam === "honeypot") {
+    console.warn("[contact] dropped: honeypot field was filled");
+    return { status: "success", name: "" };
+  }
   if (spam === "too-fast") return { status: "error", message: "That was quick. Please check your message and send again." };
 
   if (!rateLimit(`contact:${await clientKey()}`, 5)) {
