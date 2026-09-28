@@ -61,7 +61,7 @@ export function EmailGallery({ designs, limit, showFilters = true }: { designs: 
       {/* Mobile: swipeable row that keeps each email at a readable size. Tablet+: editorial grid. */}
       <div className="-mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
         {visible.map((d, i) => (
-          <div key={d.id} className="w-[84%] shrink-0 snap-start sm:w-auto">
+          <div key={d.id} className="reveal w-[84%] shrink-0 snap-start sm:w-auto">
             <EmailCard design={d} onOpen={() => setActive(d)} priority={i < 2} />
           </div>
         ))}

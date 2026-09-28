@@ -55,7 +55,7 @@ export function ServiceGrid() {
           title="Everything your Klaviyo channel needs to perform."
           intro={
             <p>
-              Strategy, build, creative and optimisation from one specialist team. We don&rsquo;t do ads, SEO or social, so email never gets divided attention.
+              Strategy, build, creative and optimisation from one specialist team, focused entirely on making your email channel perform.
             </p>
           }
         />

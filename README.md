@@ -67,6 +67,7 @@ Recommended: **Authentication → Providers → Email**, turn off **Allow new us
 | `NEXT_PUBLIC_SITE_URL` | Yes | `https://mailisto.com` (no trailing slash) |
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | `https://abcd1234.supabase.co` |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | `eyJ…` or `sb_publishable_…` |
+| `NEXT_PUBLIC_CALENDLY_URL` | No | `https://calendly.com/you/30min`. A fallback for the "Book a call" tab. The link set in Admin → Settings takes priority. |
 
 > `NEXT_PUBLIC_SUPABASE_URL` must be set **at build time**. The image optimiser allow-lists your Supabase Storage host when the app is built.
 
@@ -102,7 +103,7 @@ Any Node host that supports Next.js 16 works too (`npm run build && npm start`).
 | **Blog** | Create, edit, delete. Draft or publish (future dates are scheduled). Feature or unfeature, category, author, featured image, SEO title and description, social image. Content is written in Markdown (see below). |
 | **Email designs** | Create, edit, delete. Upload a screenshot or use a coded concept. Set type, email type, filter tags, objective, description, creative direction, featured, published and sort order. Toggle **concept vs client work**. |
 | **Case studies** | Client, industry, challenge, strategy, implementation, results (`Label \| Value` per line), how results were measured, before/after, cover, screenshots, testimonial, date, featured and publish. **The public case-study section stays hidden until one is published.** |
-| **Settings** | Public contact email and LinkedIn, Instagram and X links, shown in the footer and on the contact page when set. |
+| **Settings** | Public contact email, **Calendly link** (adds a "Book a call" tab to the Let's Talk page, which also opens directly at `/contact#book`), and LinkedIn, Instagram and X links. Each only shows on the site when set. |
 
 **Markdown supported in articles:** `## Heading`, `### Subheading`, `**bold**`, `*italic*`, `- lists`, `1. lists`, `> quotes`, `` `code` ``, fenced code blocks, `---`, `[links](https://…)`, `![alt text](https://image-url)`. Content is rendered as React elements (never raw HTML), so it can't inject scripts.
 
@@ -123,12 +124,13 @@ Changes appear on the public site right away (pages are revalidated on save, and
 | Services list | `src/components/home/ServiceGrid.tsx` |
 | Lifecycle stages | `src/components/home/EmailSystem.tsx` |
 | Process steps | `src/components/home/Process.tsx` |
-| FAQ (also feeds FAQ structured data) | `src/components/home/FAQ.tsx` |
 | Audit form options (revenue ranges, platforms…) | `src/lib/validation.ts` |
 | Built-in email concepts | `src/content/email-concepts.ts` |
 | Starter articles | `src/content/starter-posts.ts` |
 | Privacy / Terms | `src/app/(site)/privacy/page.tsx`, `src/app/(site)/terms/page.tsx` |
 | Colours, type scale, motion | `src/app/globals.css` (`@theme` block) |
+| CTA "LED" beam, 48h badge, scroll reveal | `.beam`, `.badge-48`, `.reveal` in `globals.css`. Reveal logic is in `src/components/ui/ScrollReveal.tsx` |
+| 48-hour audit timeline | `src/components/home/AuditTurnaround.tsx` |
 
 ---
 
@@ -136,7 +138,7 @@ Changes appear on the public site right away (pages are revalidated on save, and
 
 - [ ] Complete the **[bracketed placeholders]** in Privacy and Terms (legal entity, contact email, hosting provider, retention period, jurisdiction) and get them reviewed by a qualified adviser.
 - [ ] Set the public contact email and any social links in **Admin → Settings**.
-- [ ] Read the audit promises ("read-only user", "written review", "ranked recommendations") and confirm they match how you'll deliver audits.
+- [ ] Read the audit promises ("48 hours from access", "read-only user", "written review", "ranked recommendations") and confirm they match how you'll deliver audits.
 - [ ] Import the starter content, then review and edit it in your own voice.
 - [ ] Turn off public sign-ups in Supabase Auth.
 - [ ] Set up lead notifications (below) so no audit request sits unseen.

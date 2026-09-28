@@ -1,4 +1,5 @@
 import { AuditForm } from "../forms/AuditForm";
+import { AuditTurnaround } from "./AuditTurnaround";
 
 export const auditAreas = [
   "Account structure",
@@ -18,7 +19,7 @@ export function AuditChecklist({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
     <ul className={`grid grid-cols-1 gap-x-8 sm:grid-cols-2 ${tone === "dark" ? "text-white/85" : "text-ink"}`}>
       {auditAreas.map((a) => (
-        <li key={a} className={`flex items-center gap-3 border-b py-3 text-[0.95rem] ${tone === "dark" ? "border-line-dark" : "border-line"}`}>
+        <li key={a} className={`reveal flex items-center gap-3 border-b py-3 text-[0.95rem] ${tone === "dark" ? "border-line-dark" : "border-line"}`}>
           <span aria-hidden="true" className="size-1.5 shrink-0 bg-lime" />
           {a}
         </li>
@@ -45,6 +46,8 @@ export function AuditSection() {
               Get a practical review of your email program. We&rsquo;ll show you where flows, campaigns, segmentation, deliverability and lifecycle strategy could be earning more.
             </p>
 
+            <AuditTurnaround className="mt-10 max-w-lg" />
+
             <h3 className="label mt-12 text-white">What we look at</h3>
             <div className="mt-3">
               <AuditChecklist />
@@ -53,7 +56,7 @@ export function AuditSection() {
             <h3 className="label mt-12 text-white">What you get</h3>
             <ul className="mt-4 space-y-3 text-[0.95rem] text-white/85">
               <li className="flex gap-3">
-                <span className="text-lime">→</span>A written review of what&rsquo;s working and what isn&rsquo;t.
+                <span className="text-lime">→</span>A written review of what&rsquo;s working and what isn&rsquo;t, within 48 hours.
               </li>
               <li className="flex gap-3">
                 <span className="text-lime">→</span>Recommendations ranked by likely revenue impact and effort.
@@ -67,9 +70,9 @@ export function AuditSection() {
 
         <div className="bg-white">
           <div className="mx-auto max-w-2xl px-5 py-16 sm:px-8 lg:mr-auto lg:ml-0 lg:py-28 lg:pl-16 lg:pr-12">
-            <div className="lg:sticky lg:top-28">
+            <div className="reveal lg:sticky lg:top-28">
               <h3 className="text-2xl font-semibold tracking-tight">Request your free audit</h3>
-              <p className="mt-2 mb-8 text-muted">Two quick steps. About a minute.</p>
+              <p className="mt-2 mb-8 text-muted">Two quick steps. About a minute. Findings within 48 hours.</p>
               <AuditForm idPrefix="home-audit" />
             </div>
           </div>

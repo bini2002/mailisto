@@ -1,5 +1,5 @@
 import { getEmailDesigns, getPublishedCaseStudies } from "@/lib/data";
-import { LinkButton } from "../ui/Button";
+import { AuditBadge, LinkButton } from "../ui/Button";
 import { SectionHeading } from "../ui/SectionHeading";
 import { CaseStudyCard } from "../work/CaseStudyCard";
 import { EmailGallery } from "../work/EmailGallery";
@@ -61,6 +61,7 @@ export async function WorkSection() {
             </LinkButton>
             <LinkButton href="/audit" arrow>
               Get a Free Audit
+              <AuditBadge />
             </LinkButton>
           </div>
         </div>

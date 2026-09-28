@@ -21,7 +21,8 @@ export function Process() {
           title="A clear process, from first audit to ongoing growth."
           intro={<p>Six stages, each with a defined output. You always know what we&rsquo;re working on and why.</p>}
         />
-        <ol className="mt-14 border-t border-ink">
+        <ol className="relative mt-14">
+          <span aria-hidden="true" className="reveal-line absolute inset-x-0 top-0 h-px bg-ink" />
           {steps.map((step, i) => (
             <ProcessStep key={step.name} step={step} index={i} />
           ))}

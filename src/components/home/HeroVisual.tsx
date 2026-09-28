@@ -51,7 +51,15 @@ export function HeroVisual() {
         </div>
       </div> */}
       <div>
-        <Image src={imageUrl} alt="" width={500} height={1000} />
+        <Image
+          src={imageUrl}
+          alt="Annotated welcome email concept for a fictional coffee brand"
+          width={1122}
+          height={1402}
+          priority
+          sizes="(min-width: 1024px) 40vw, (min-width: 640px) 27rem, 100vw"
+          className="h-auto w-full"
+        />
       </div>
       <figcaption className="mt-5 border-t border-line pt-4">
         <span className="label text-muted">

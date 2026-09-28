@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { auditCta, mainNav, talkCta } from "@/lib/site";
-import { buttonClasses } from "../ui/Button";
+import { AuditBadge, buttonClasses } from "../ui/Button";
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -83,10 +83,11 @@ export function MobileMenu() {
             ))}
           </ul>
           <div className="mt-8 grid gap-3">
-            <Link href={auditCta.href} onClick={() => setOpen(false)} className={buttonClasses("primary", "lg", "w-full")}>
+            <Link href={auditCta.href} onClick={() => setOpen(false)} className={buttonClasses("primary", "lg", "w-full", true)}>
               {auditCta.label}
+              <AuditBadge />
             </Link>
-            <Link href={talkCta.href} onClick={() => setOpen(false)} className={buttonClasses("outline", "lg", "w-full")}>
+            <Link href={talkCta.href} onClick={() => setOpen(false)} className={buttonClasses("outline", "lg", "w-full", true)}>
               {talkCta.label}
             </Link>
           </div>

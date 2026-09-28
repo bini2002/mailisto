@@ -24,7 +24,7 @@ export function About() {
           }
           intro={
             <p>
-              Mailisto is a specialist Klaviyo agency for Shopify and ecommerce brands in the UK, US, Australia, Canada and beyond. No ads, no SEO, no social. Email is the whole job.
+              Mailisto is a specialist Klaviyo agency for Shopify and ecommerce brands. Email and retention are our focus, so your list gets the strategy, creative and attention it deserves.
             </p>
           }
         />

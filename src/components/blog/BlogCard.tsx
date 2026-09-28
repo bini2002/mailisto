@@ -5,7 +5,7 @@ import { cn, formatDate } from "@/lib/utils";
 
 export function BlogCard({ post, large = false }: { post: BlogPost; large?: boolean }) {
   return (
-    <article className="group relative flex h-full flex-col border-t border-ink pt-6">
+    <article className="reveal group relative flex h-full flex-col border-t border-ink pt-6">
       {post.featured_image_url && (
         <div className={cn("relative mb-6 overflow-hidden bg-paper-2", large ? "aspect-[16/9]" : "aspect-[16/10]")}>
           <Image

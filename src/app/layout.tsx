@@ -50,8 +50,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={poppins.variable}>
-      <body>{children}</body>
+    <html lang="en" className={poppins.variable} suppressHydrationWarning>
+      <head>
+        {/* Enables scroll-reveal styles only when JS runs, so content is never hidden without it. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

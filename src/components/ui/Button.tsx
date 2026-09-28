@@ -22,8 +22,19 @@ const sizes: Record<Size, string> = {
   lg: "h-14 px-7 text-base",
 };
 
-export function buttonClasses(variant: Variant = "primary", size: Size = "md", className?: string) {
-  return cn(base, variants[variant], sizes[size], className);
+/** `beam` adds the travelling "LED" light around the border (see .beam in globals.css). */
+export function buttonClasses(variant: Variant = "primary", size: Size = "md", className?: string, beam = false) {
+  return cn(base, variants[variant], sizes[size], beam && `beam beam-${variant}`, className);
+}
+
+/** Small "48h" turnaround tag shown inside every audit CTA. */
+export function AuditBadge({ tone = "dark", className }: { tone?: "dark" | "lime"; className?: string }) {
+  return (
+    <span className={cn("badge-48", tone === "lime" && "badge-48-lime", className)}>
+      <span aria-hidden="true" className="badge-48-dot" />
+      48h<span className="sr-only"> turnaround</span>
+    </span>
+  );
 }
 
 export function Arrow() {
@@ -39,12 +50,13 @@ interface LinkButtonProps extends Omit<ComponentProps<typeof Link>, "className">
   size?: Size;
   className?: string;
   arrow?: boolean;
+  beam?: boolean;
   children: ReactNode;
 }
 
-export function LinkButton({ variant = "primary", size = "md", className, arrow, children, ...props }: LinkButtonProps) {
+export function LinkButton({ variant = "primary", size = "md", className, arrow, beam = true, children, ...props }: LinkButtonProps) {
   return (
-    <Link className={buttonClasses(variant, size, className)} {...props}>
+    <Link className={buttonClasses(variant, size, className, beam)} {...props}>
       {children}
       {arrow && <Arrow />}
     </Link>
@@ -56,11 +68,12 @@ interface ButtonProps extends ComponentProps<"button"> {
   size?: Size;
   loading?: boolean;
   arrow?: boolean;
+  beam?: boolean;
 }
 
-export function Button({ variant = "primary", size = "md", className, loading, arrow, children, disabled, ...props }: ButtonProps) {
+export function Button({ variant = "primary", size = "md", className, loading, arrow, beam = false, children, disabled, ...props }: ButtonProps) {
   return (
-    <button className={buttonClasses(variant, size, className)} disabled={disabled || loading} aria-busy={loading || undefined} {...props}>
+    <button className={buttonClasses(variant, size, className, beam)} disabled={disabled || loading} aria-busy={loading || undefined} {...props}>
       {loading && <Spinner />}
       {children}
       {arrow && !loading && <Arrow />}

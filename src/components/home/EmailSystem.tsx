@@ -33,7 +33,7 @@ export function EmailSystem() {
 
         <ol className="relative mt-16 grid gap-0 lg:grid-cols-6">
           {/* connecting line */}
-          <span aria-hidden="true" className="absolute top-[7px] left-[7px] hidden h-px w-[calc(100%-14px)] bg-line-dark lg:block" />
+          <span aria-hidden="true" className="reveal-line absolute top-[7px] left-[7px] hidden h-px w-[calc(100%-14px)] bg-lime/60 lg:block" />
           <span aria-hidden="true" className="absolute top-0 bottom-0 left-[7px] w-px bg-line-dark lg:hidden" />
           {stages.map((s, i) => (
             <li key={s.name} className="reveal relative flex flex-col pb-10 pl-10 lg:pb-0 lg:pl-0 lg:pr-6">
@@ -53,7 +53,7 @@ export function EmailSystem() {
         </ol>
 
         {/* Layers that run across every stage */}
-        <div className="mt-14 grid gap-px border border-line-dark bg-line-dark lg:grid-cols-12">
+        <div className="reveal mt-14 grid gap-px border border-line-dark bg-line-dark lg:grid-cols-12">
           <div className="bg-ink-3 p-6 lg:col-span-7">
             <p className="label text-lime">Campaign layer</p>
             <p className="mt-3 text-white/80">

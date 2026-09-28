@@ -16,15 +16,17 @@ export function Logo({
     <Link
       href="/"
       aria-label="Mailisto home"
-      className={cn("inline-flex items-center", className)}
+      className={cn("inline-flex w-36 items-center", className)}
     >
+      {/* Source files are 799×312; width is set by the wrapper, height follows. */}
       <Image
         src={tone === "light" ? "/white-logo.png" : "/logo.png"}
         alt="Mailisto"
-        width={300}
-        height={200}
+        width={799}
+        height={312}
         priority={priority}
-        className="w-40sm:h-8"
+        sizes="240px"
+        className="h-auto w-full"
       />
     </Link>
   );
@@ -43,9 +45,10 @@ export function LogoMark({
     <Image
       src={tone === "light" ? "/white-logo.png" : "/logo.png"}
       alt="Mailisto"
-      width={160}
-      height={40}
-      className={cn("h-6 w-auto", className)}
+      width={799}
+      height={312}
+      sizes="160px"
+      className={cn("h-auto w-32", className)}
     />
   );
 }

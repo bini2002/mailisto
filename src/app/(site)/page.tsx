@@ -3,10 +3,8 @@ import { About } from "@/components/home/About";
 import { AuditSection } from "@/components/home/AuditSection";
 import { BlogPreview } from "@/components/home/BlogPreview";
 import { EmailSystem } from "@/components/home/EmailSystem";
-import { FAQ, faqs } from "@/components/home/FAQ";
 import { Hero } from "@/components/home/Hero";
 import { PositioningStrip } from "@/components/home/PositioningStrip";
-import { Principles } from "@/components/home/Principles";
 import { Problem } from "@/components/home/Problem";
 import { Process } from "@/components/home/Process";
 import { ServiceGrid } from "@/components/home/ServiceGrid";
@@ -28,7 +26,6 @@ const serviceLd = {
   name: "Mailisto",
   url: site.url,
   description: site.description,
-  areaServed: ["GB", "US", "AU", "CA"],
   provider: { "@id": `${site.url}/#organization` },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -46,16 +43,11 @@ const serviceLd = {
   },
 };
 
-const faqLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
-};
 
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={[organizationLd, websiteLd, serviceLd, faqLd]} />
+      <JsonLd data={[organizationLd, websiteLd, serviceLd]} />
       <Hero />
       <PositioningStrip />
       <Problem />
@@ -65,8 +57,6 @@ export default function HomePage() {
       <WorkSection />
       <AuditSection />
       <About />
-      <Principles />
-      <FAQ />
       <BlogPreview />
       <CTASection />
     </>

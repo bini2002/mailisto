@@ -24,6 +24,20 @@ export function readingTime(markdown: string) {
   return Math.max(1, Math.round(words / 220));
 }
 
+/** Accepts only https://calendly.com/... scheduling links. */
+export function calendlyUrl(url: string | null | undefined): string | null {
+  const u = safeUrl(url);
+  if (!u) return null;
+  try {
+    const parsed = new URL(u);
+    return parsed.protocol === "https:" && (parsed.hostname === "calendly.com" || parsed.hostname.endsWith(".calendly.com")) && parsed.pathname.length > 1
+      ? `${parsed.origin}${parsed.pathname}`
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Only allow http(s) and relative URLs through to href/src attributes. */
 export function safeUrl(url: string | null | undefined): string | null {
   if (!url) return null;

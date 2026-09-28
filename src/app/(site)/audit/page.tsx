@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { AuditForm } from "@/components/forms/AuditForm";
 import { AuditChecklist } from "@/components/home/AuditSection";
+import { AuditTurnaround } from "@/components/home/AuditTurnaround";
 import { JsonLd, breadcrumbLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Free Klaviyo Revenue Audit",
   description:
-    "Get a free, practical audit of your Klaviyo account. We review flows, campaigns, segmentation, deliverability and creative, then send prioritised recommendations.",
+    "Get a free, practical audit of your Klaviyo account within 48 hours. We review flows, campaigns, segmentation, deliverability and creative, then send prioritised recommendations.",
   alternates: { canonical: "/audit" },
   openGraph: { url: "/audit", title: "Free Klaviyo Revenue Audit | Mailisto" },
 };
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 const steps = [
   { t: "You send the basics", d: "Two short steps: who you are, and a little about your store." },
   { t: "We review your account", d: "With a read-only Klaviyo user, we work through flows, campaigns, segments, deliverability and creative." },
-  { t: "You get the findings", d: "A clear write-up with recommendations ranked by likely revenue impact and effort." },
+  { t: "You get the findings in 48 hours", d: "Within 48 hours of access: a clear write-up with recommendations ranked by likely revenue impact and effort." },
 ];
 
 export default function AuditPage() {
@@ -34,12 +35,13 @@ export default function AuditPage() {
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
               A practical, specific review of your Klaviyo account by people who only do ecommerce email. Not a sales call dressed up as an audit.
             </p>
+            <AuditTurnaround tone="light" className="mt-8 max-w-xl" />
           </div>
 
           <div className="lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1">
             <div className="border border-ink bg-white p-6 sm:p-10 lg:sticky lg:top-24">
               <h2 className="text-2xl font-semibold tracking-tight">Request your free audit</h2>
-              <p className="mt-2 mb-8 text-muted">Takes about a minute. No obligation.</p>
+              <p className="mt-2 mb-8 text-muted">Takes about a minute. Findings within 48 hours. No obligation.</p>
               <AuditForm idPrefix="page-audit" />
             </div>
           </div>

@@ -330,7 +330,8 @@ insert into public.site_settings (key, value) values
   ('contact_email', null),
   ('linkedin_url', null),
   ('instagram_url', null),
-  ('x_url', null)
+  ('x_url', null),
+  ('calendly_url', null)
 on conflict (key) do nothing;
 
 -- ---------------------------------------------------------------------

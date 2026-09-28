@@ -1,5 +1,5 @@
 import { auditCta, talkCta } from "@/lib/site";
-import { LinkButton } from "../ui/Button";
+import { AuditBadge, LinkButton } from "../ui/Button";
 import { HeroVisual } from "./HeroVisual";
 
 export function Hero() {
@@ -48,6 +48,7 @@ export function Hero() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <LinkButton href={auditCta.href} size="lg" arrow>
               {auditCta.label}
+              <AuditBadge />
             </LinkButton>
             <LinkButton href={talkCta.href} size="lg" variant="outline">
               {talkCta.label}
@@ -55,7 +56,8 @@ export function Hero() {
           </div>
 
           <p className="mt-5 text-sm text-muted">
-            A free, practical review of your Klaviyo account. No obligation.
+            A free, practical review of your Klaviyo account,{" "}
+            <strong className="font-semibold text-ink">delivered within 48 hours</strong>. No obligation.
           </p>
         </div>
 

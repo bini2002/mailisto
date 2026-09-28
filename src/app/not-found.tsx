@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
-import { LinkButton } from "@/components/ui/Button";
+import { AuditBadge, LinkButton } from "@/components/ui/Button";
 
 export const metadata: Metadata = { title: "Page not found", robots: { index: false } };
 
@@ -19,8 +19,9 @@ export default function NotFound() {
           </LinkButton>
           <LinkButton href="/audit" arrow>
             Get a Free Audit
+            <AuditBadge />
           </LinkButton>
-          <LinkButton href="/blog" variant="outline">
+          <LinkButton href="/blog" variant="outline" beam={false}>
             Read the blog
           </LinkButton>
         </div>
