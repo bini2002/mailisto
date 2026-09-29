@@ -10,7 +10,7 @@ import { getEmailDesigns, getPublishedCaseStudies } from "@/lib/data";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Work: Email Design & Klaviyo Concepts",
+  title: "Work: Email Design Concepts",
   description:
     "Email design concepts from the Mailisto Design Lab: welcome series, abandoned cart, post-purchase, win-back, launches and promotional campaigns, each built around a commercial objective.",
   alternates: { canonical: "/work" },
@@ -44,7 +44,7 @@ export default async function WorkPage() {
               The Mailisto Design Lab: original email concepts for fictional brands. They show how we think about design, copy and conversion. They are not client work.
             </p>
           ) : (
-            <p>Selected email design and Klaviyo work.</p>
+            <p>Selected email and SMS work.</p>
           )
         }
       />

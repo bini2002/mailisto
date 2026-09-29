@@ -54,9 +54,11 @@ interface LinkButtonProps extends Omit<ComponentProps<typeof Link>, "className">
   children: ReactNode;
 }
 
-export function LinkButton({ variant = "primary", size = "md", className, arrow, beam = true, children, ...props }: LinkButtonProps) {
+/** The travelling light is reserved for the main CTA: links to the free audit get it by default. */
+export function LinkButton({ variant = "primary", size = "md", className, arrow, beam, children, ...props }: LinkButtonProps) {
+  const withBeam = beam ?? (typeof props.href === "string" && props.href.startsWith("/audit"));
   return (
-    <Link className={buttonClasses(variant, size, className, beam)} {...props}>
+    <Link className={buttonClasses(variant, size, className, withBeam)} {...props}>
       {children}
       {arrow && <Arrow />}
     </Link>

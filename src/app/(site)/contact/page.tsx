@@ -9,7 +9,7 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Talk to Mailisto about Klaviyo email marketing for your Shopify store. Send us a message and we'll reply by email.",
+  description: "Talk to Mailisto about email and SMS marketing for your Shopify store. Send a message or book a call.",
   alternates: { canonical: "/contact" },
   openGraph: { url: "/contact", title: "Contact | Mailisto" },
 };

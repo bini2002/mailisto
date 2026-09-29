@@ -18,7 +18,7 @@ export function ImageUploader({
   name: string;
   label: string;
   defaultValue?: string | null;
-  folder: "designs" | "blog" | "case-studies" | "misc";
+  folder: "designs" | "blog" | "case-studies" | "hero" | "misc";
   hint?: string;
 }) {
   const [url, setUrl] = useState(defaultValue ?? "");

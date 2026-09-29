@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { PiChartLineUpLight, PiCompassLight, PiFlowArrowLight, PiCalendarBlankLight, PiPenNibLight } from "react-icons/pi";
+import { PiCalendarBlankLight, PiChartLineUpLight, PiChatCircleTextLight, PiCompassLight, PiFlowArrowLight, PiPenNibLight } from "react-icons/pi";
 import { SectionHeading } from "../ui/SectionHeading";
 import { ServiceCard } from "./ServiceCard";
 import Link from "next/link";
@@ -14,32 +14,38 @@ export interface Service {
 const services: Service[] = [
   {
     name: "Strategy",
-    summary: "Know what to send, to whom, and why.",
-    items: ["Klaviyo account audit", "Email strategy", "Customer journey mapping", "Segmentation", "Revenue planning"],
+    summary: "Know what to send, who gets it, and why.",
+    items: ["Email & SMS audit", "Channel strategy", "Customer journey mapping", "Segmentation", "Revenue planning"],
     Icon: PiCompassLight,
   },
   {
-    name: "Lifecycle flows",
-    summary: "Automation that earns every day.",
-    items: ["Welcome", "Abandoned cart & checkout", "Browse abandonment", "Post-purchase", "Replenishment", "VIP & loyalty", "Win-back"],
+    name: "Automated flows",
+    summary: "Messages that send themselves at exactly the right moment.",
+    items: ["Welcome series", "Abandoned cart & checkout", "Browse reminders", "Post-purchase", "Replenishment", "VIP & loyalty", "Win-back"],
     Icon: PiFlowArrowLight,
   },
   {
+    name: "SMS marketing",
+    summary: "Short, well-timed texts that work alongside your emails.",
+    items: ["SMS list growth & consent", "Cart & checkout texts", "Launch & drop alerts", "Shipping & back-in-stock", "Email + SMS coordination"],
+    Icon: PiChatCircleTextLight,
+  },
+  {
     name: "Campaigns",
-    summary: "A calendar, not a scramble.",
-    items: ["Campaign calendar", "Product launches", "Promotions", "Seasonal & BFCM", "Educational content"],
+    summary: "A plan, not a Friday-afternoon panic.",
+    items: ["Email & SMS calendar", "Product launches", "Promotions", "Seasonal & Black Friday", "Educational content"],
     Icon: PiCalendarBlankLight,
   },
   {
-    name: "Creative",
-    summary: "Design and copy built to convert.",
-    items: ["Email design", "Copywriting", "Subject lines", "Mobile-first templates", "Brand-consistent systems"],
+    name: "Design & copy",
+    summary: "Messages people actually want to open, read and click.",
+    items: ["Email design", "Copywriting", "Subject lines & SMS copy", "Mobile-first templates", "On-brand design systems"],
     Icon: PiPenNibLight,
   },
   {
-    name: "Optimisation",
-    summary: "Measure, test, improve. Repeat.",
-    items: ["A/B testing", "Reporting & analytics", "Revenue attribution", "Deliverability", "Ongoing optimisation"],
+    name: "Testing & reporting",
+    summary: "Try it, measure it, keep what makes money.",
+    items: ["A/B testing", "Revenue reporting", "Attribution you can trust", "Deliverability", "Ongoing optimisation"],
     Icon: PiChartLineUpLight,
   },
 ];
@@ -52,15 +58,15 @@ export function ServiceGrid() {
           id="services-title"
           index="02"
           label="Services"
-          title="Everything your Klaviyo channel needs to perform."
+          title="Everything your email and SMS need to actually sell."
           intro={
             <p>
-              Strategy, build, creative and optimisation from one specialist team, focused entirely on making your email channel perform.
+              Strategy, set-up, design, copy and reporting from one specialist team. You don’t need five freelancers and a group chat.
             </p>
           }
         />
 
-        <ul className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <ServiceCard key={s.name} service={s} index={i} />
           ))}
@@ -68,9 +74,9 @@ export function ServiceGrid() {
 
         <div className="mt-6 flex flex-col gap-4 border border-line bg-paper p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
           <p className="max-w-2xl text-[0.98rem]">
-            <strong className="font-semibold">New to Klaviyo or migrating?</strong>{" "}
+            <strong className="font-semibold">Setting up or switching platforms?</strong>{" "}
             <span className="text-muted">
-              We set accounts up properly from day one: Shopify integration, branded sending domain, core flows, templates and a clean migration from your current platform.
+              We work with the major email and SMS platforms, including Klaviyo, Omnisend, Attentive and Postscript. We’ll set everything up properly (Shopify connection, sending domain, consent, core flows) and move your list across without losing anyone.
             </span>
           </p>
           <Link href="/contact" className="label shrink-0 text-ink underline decoration-lime decoration-2 underline-offset-4 hover:bg-lime">

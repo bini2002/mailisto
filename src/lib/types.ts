@@ -113,4 +113,18 @@ export interface ContactSubmission {
   created_at: string;
 }
 
+export interface HeroSlide {
+  id: string;
+  label: string | null;
+  image_url: string | null;
+  image_alt: string | null;
+  concept_template: string | null;
+  caption: string | null;
+  notes: string | null;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export type SiteSettings = Partial<Record<"contact_email" | "linkedin_url" | "instagram_url" | "x_url" | "calendly_url", string>>;

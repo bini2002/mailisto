@@ -87,11 +87,11 @@ export function MobileMenu() {
               {auditCta.label}
               <AuditBadge />
             </Link>
-            <Link href={talkCta.href} onClick={() => setOpen(false)} className={buttonClasses("outline", "lg", "w-full", true)}>
+            <Link href={talkCta.href} onClick={() => setOpen(false)} className={buttonClasses("outline", "lg", "w-full")}>
               {talkCta.label}
             </Link>
           </div>
-          <p className="mt-auto pt-10 text-sm text-muted">Klaviyo email marketing for Shopify brands.</p>
+          <p className="mt-auto pt-10 text-sm text-muted">Email &amp; SMS marketing for Shopify brands.</p>
         </nav>
       </div>
     </div>

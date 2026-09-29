@@ -50,7 +50,7 @@ export function ContactForm() {
           ✓
         </span>
         <h2 className="mt-6 text-2xl font-semibold tracking-tight">{state.name ? `Thanks, ${state.name}.` : "Thanks."} Message received.</h2>
-        <p className="mt-3 max-w-md text-muted">We read every message ourselves and will reply by email. If it&rsquo;s about your Klaviyo account, the free audit is often the fastest place to start.</p>
+        <p className="mt-3 max-w-md text-muted">We read every message ourselves and will reply by email. If it&rsquo;s about your email or SMS, the free audit is often the fastest place to start.</p>
       </div>
     );
   }

@@ -9,7 +9,7 @@ import { formatDate } from "@/lib/utils";
 export default async function AdminOverview() {
   const { supabase } = await requireAdmin();
   const head = { count: "exact" as const, head: true };
-  const [newAudits, newMessages, posts, drafts, designs, studies, recent] = await Promise.all([
+  const [newAudits, newMessages, posts, drafts, designs, studies, recent, slides] = await Promise.all([
     supabase.from("audit_submissions").select("id", head).eq("status", "new"),
     supabase.from("contact_submissions").select("id", head).eq("status", "new"),
     supabase.from("blog_posts").select("id", head).eq("status", "published"),
@@ -17,6 +17,7 @@ export default async function AdminOverview() {
     supabase.from("email_designs").select("id", head),
     supabase.from("case_studies").select("id", head).eq("status", "published"),
     supabase.from("audit_submissions").select("id,name,email,store_url,revenue_range,status,created_at").order("created_at", { ascending: false }).limit(6),
+    supabase.from("hero_slides").select("id", head),
   ]);
 
   const stats = [
@@ -27,17 +28,28 @@ export default async function AdminOverview() {
     { label: "Published case studies", value: studies.count ?? 0, href: "/admin/case-studies" },
   ];
   const isEmpty = (designs.count ?? 0) === 0 && (posts.count ?? 0) + (drafts.count ?? 0) === 0;
+  const noSlides = !slides.error && (slides.count ?? 0) === 0;
   const leads = (recent.data ?? []) as Pick<AuditSubmission, "id" | "name" | "email" | "store_url" | "revenue_range" | "status" | "created_at">[];
 
   return (
     <>
       <AdminPageHeader title="Overview" description="Leads, content and what needs attention." />
 
+      {!isEmpty && noSlides && (
+        <div className="mb-8 flex flex-col gap-4 border border-line-strong bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-semibold">No hero slides yet.</p>
+            <p className="text-sm text-muted">The homepage is showing the built-in set. Import it to edit, reorder or replace the slides.</p>
+          </div>
+          <ActionButton action={importStarterContent} values={{}} label="Import starter slides" />
+        </div>
+      )}
+
       {isEmpty && (
         <div className="mb-8 flex flex-col gap-4 border border-ink bg-lime/30 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="font-semibold">Your CMS is empty.</p>
-            <p className="text-sm text-ink/75">Import the nine Design Lab concepts and five starter articles. You can edit or delete them afterwards.</p>
+            <p className="text-sm text-ink/75">Import the Design Lab concepts, hero slides and starter articles. You can edit or delete them afterwards.</p>
           </div>
           <ActionButton action={importStarterContent} values={{}} label="Import starter content" />
         </div>

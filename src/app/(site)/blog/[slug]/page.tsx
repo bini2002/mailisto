@@ -142,9 +142,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             </div>
 
             <aside aria-label="Free audit" className="mt-16 max-w-[42rem] bg-ink p-8 text-white sm:p-10">
-              <p className="label text-lime">Free Klaviyo revenue audit</p>
+              <p className="label text-lime">Free email &amp; SMS audit</p>
               <p className="mt-4 text-2xl font-semibold tracking-tight">Want us to look at your account?</p>
-              <p className="mt-3 text-muted-dark">We&rsquo;ll review your flows, campaigns, segmentation and deliverability, and send back prioritised recommendations within 48 hours.</p>
+              <p className="mt-3 text-muted-dark">We&rsquo;ll go through your flows, campaigns, SMS and deliverability, and send back the fixes that matter most within 48 hours.</p>
               <LinkButton href="/audit" className="mt-6" arrow>
                 Get a Free Audit
                 <AuditBadge />

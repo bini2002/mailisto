@@ -21,7 +21,7 @@ export default function NotFound() {
             Get a Free Audit
             <AuditBadge />
           </LinkButton>
-          <LinkButton href="/blog" variant="outline" beam={false}>
+          <LinkButton href="/blog" variant="outline">
             Read the blog
           </LinkButton>
         </div>

@@ -16,7 +16,7 @@ import { site } from "@/lib/site";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: { absolute: "Mailisto | Klaviyo Email Marketing Agency for Shopify Brands" },
+  title: { absolute: site.title },
   alternates: { canonical: "/" },
 };
 
@@ -29,17 +29,18 @@ const serviceLd = {
   provider: { "@id": `${site.url}/#organization` },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Klaviyo email marketing services",
+    name: "Email and SMS marketing services",
     itemListElement: [
-      "Klaviyo account audit",
-      "Klaviyo setup and migration",
-      "Lifecycle flows",
+      "Email and SMS marketing audit",
+      "Email and SMS platform setup and migration",
+      "Automated email and SMS flows",
       "Email campaigns",
+      "SMS campaigns",
       "Email design and copywriting",
       "Segmentation",
       "A/B testing and reporting",
       "Email deliverability",
-    ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name, serviceType: "Email marketing" } })),
+    ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name, serviceType: "Email and SMS marketing" } })),
   },
 };
 

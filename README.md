@@ -1,6 +1,6 @@
 # Mailisto: website & CMS
 
-The production website for **Mailisto**, a Klaviyo email agency for Shopify and ecommerce brands, plus a small protected CMS for the blog, email designs, case studies and leads.
+The production website for **Mailisto**, an email and SMS marketing agency for Shopify and ecommerce brands, plus a small protected CMS for the blog, email designs, case studies and leads.
 
 - **Stack:** Next.js 16 (App Router, Server Components, Server Actions) · TypeScript · Tailwind CSS v4 · Supabase (Postgres, Auth, Storage, RLS) · React Icons · Poppins (self-hosted)
 - **Strategy, copy and design rationale:** see [`docs/STRATEGY.md`](docs/STRATEGY.md)
@@ -42,6 +42,8 @@ You do **not** need the service-role key. The app never uses it. All writes go t
 ### 2.2 Create the database
 1. Open **SQL Editor → New query**.
 2. Paste the whole of [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql) and click **Run**.
+
+Then do the same with [`supabase/migrations/0002_hero_slides.sql`](supabase/migrations/0002_hero_slides.sql), which adds the homepage hero slides. **Already set up? Just run `0002` now.**
 
 This creates every table, index, constraint, trigger and RLS policy, the public `media` storage bucket (images only, max 5 MB, no SVG), and the default site settings.
 
@@ -100,6 +102,7 @@ Any Node host that supports Next.js 16 works too (`npm run build && npm start`).
 | **Overview** | New lead counts, content counts, latest audit requests, one-click starter import. |
 | **Audit leads** | Name, email, store URL, revenue range, platform, list size, challenge, notes and date. Filter by status and update status (new → contacted → in progress → audit sent → won/lost/archived). Add internal notes or delete. |
 | **Messages** | Contact form submissions, with status (new/replied/archived), notes and delete. |
+| **Hero slides** | The designs that dissolve one into the next on the right of the homepage hero. Add, edit, reorder, hide or delete them. Upload a 4:5 image (about 1120×1400 px) or pick a built-in design, and add a label, caption and up to 4 notes. 4–5 slides work best. Until you publish your own, the built-in set is shown (import it from the overview to edit it). |
 | **Blog** | Create, edit, delete. Draft or publish (future dates are scheduled). Feature or unfeature, category, author, featured image, SEO title and description, social image. Content is written in Markdown (see below). |
 | **Email designs** | Create, edit, delete. Upload a screenshot or use a coded concept. Set type, email type, filter tags, objective, description, creative direction, featured, published and sort order. Toggle **concept vs client work**. |
 | **Case studies** | Client, industry, challenge, strategy, implementation, results (`Label \| Value` per line), how results were measured, before/after, cover, screenshots, testimonial, date, featured and publish. **The public case-study section stays hidden until one is published.** |

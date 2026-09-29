@@ -8,7 +8,7 @@ export const REVENUE_RANGES = [
   "$1M+ / month",
 ] as const;
 
-export const PLATFORMS = ["Klaviyo", "Shopify Email", "Mailchimp", "Omnisend", "Other", "Not using one yet"] as const;
+export const PLATFORMS = ["Klaviyo", "Omnisend", "Shopify Email", "Mailchimp", "Attentive", "Postscript", "Other", "Not using one yet"] as const;
 
 export const LIST_SIZES = ["Under 5,000", "5,000–25,000", "25,000–100,000", "100,000–500,000", "500,000+", "Not sure"] as const;
 
@@ -18,7 +18,8 @@ export const CHALLENGES = [
   "Campaigns are inconsistent",
   "Weak segmentation",
   "Deliverability or inbox placement",
-  "Setting up or migrating to Klaviyo",
+  "Starting or improving SMS",
+  "Setting up or switching platforms",
   "Not sure what's working",
   "Something else",
 ] as const;
@@ -87,7 +88,7 @@ export function validateAuditStep1(i: Pick<AuditInput, "name" | "email" | "store
 export function validateAuditStep2(i: Pick<AuditInput, "revenue_range" | "platform" | "list_size" | "challenge">): FieldErrors {
   const e: FieldErrors = {};
   if (!(REVENUE_RANGES as readonly string[]).includes(i.revenue_range)) e.revenue_range = "Please choose a revenue range.";
-  if (!(PLATFORMS as readonly string[]).includes(i.platform)) e.platform = "Please choose your email platform.";
+  if (!(PLATFORMS as readonly string[]).includes(i.platform)) e.platform = "Please choose your platform.";
   if (!(LIST_SIZES as readonly string[]).includes(i.list_size)) e.list_size = "Please choose a list size.";
   if (!(CHALLENGES as readonly string[]).includes(i.challenge)) e.challenge = "Please choose your biggest challenge.";
   return e;
