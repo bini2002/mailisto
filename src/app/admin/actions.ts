@@ -452,6 +452,20 @@ export async function saveSettings(fd: FormData): Promise<AdminResult> {
   if (calendlyRaw && !calendly) return { ok: false, message: "Calendly link must look like https://calendly.com/your-name/30min" };
   rows.push({ key: "calendly_url", value: calendly });
 
+  // Hero video: a full https:// URL or a file in /public (e.g. /videos/hero.mp4).
+  const mediaUrl = (k: string, label: string): string | null | AdminResult => {
+    const v = str(fd, k, 500);
+    if (!v) return null;
+    const u = safeUrl(v);
+    if (u && (u.startsWith("https://") || u.startsWith("/"))) return u;
+    return { ok: false, message: `${label} must be an https:// URL or a path like /videos/hero.mp4` };
+  };
+  const video = mediaUrl("hero_video_url", "Hero video");
+  if (video && typeof video === "object") return video;
+  const poster = mediaUrl("hero_video_poster", "Hero video poster");
+  if (poster && typeof poster === "object") return poster;
+  rows.push({ key: "hero_video_url", value: video as string | null }, { key: "hero_video_poster", value: poster as string | null });
+
   const { error } = await supabase.from("site_settings").upsert(rows);
   if (error) return dbError(error.message);
   revalidatePath("/", "layout");

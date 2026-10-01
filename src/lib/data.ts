@@ -175,3 +175,26 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   for (const row of data ?? []) if (row.value) (out as Record<string, string>)[row.key] = row.value;
   return out;
 });
+
+export interface HeroVideo {
+  src: string | null;
+  webm: string | null;
+  poster: string;
+}
+
+/**
+ * Hero video: Admin → Settings wins; otherwise files dropped into /public/videos.
+ * With no video at all, the frame still shows the poster image.
+ */
+export const getHeroVideo = cache(async (): Promise<HeroVideo> => {
+  const settings = await getSiteSettings();
+  const { existsSync } = await import("node:fs");
+  const { join } = await import("node:path");
+  const has = (p: string) => existsSync(join(process.cwd(), "public", p));
+
+  const src = settings.hero_video_url || (has("videos/hero.mp4") ? "/videos/hero.mp4" : null);
+  const webm = !settings.hero_video_url && has("videos/hero.webm") ? "/videos/hero.webm" : null;
+  const poster =
+    settings.hero_video_poster || (has("videos/hero-poster.jpg") ? "/videos/hero-poster.jpg" : "/images/hero.png");
+  return { src: src || webm, webm: src ? webm : null, poster };
+});

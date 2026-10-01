@@ -451,3 +451,18 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Hero dotted wave: a slow sideways drift, nothing more. */
+@media (prefers-reduced-motion: no-preference) {
+  .dot-wave {
+    animation: dot-drift 14s ease-in-out infinite alternate;
+  }
+}
+@keyframes dot-drift {
+  from {
+    transform: translate3d(-1.5%, 0, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(1.5%, -2%, 0) scale(1.05);
+  }
+}
