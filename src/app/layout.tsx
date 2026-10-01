@@ -19,7 +19,7 @@ const poppins = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Mailisto | Klaviyo Email Marketing Agency for Shopify Brands",
+    default: site.title,
     template: "%s | Mailisto",
   },
   description: site.description,
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: "en_GB",
     url: "/",
-    title: "Mailisto | Klaviyo Email Marketing Agency for Shopify Brands",
+    title: site.title,
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mailisto | Klaviyo Email Marketing Agency for Shopify Brands",
+    title: site.title,
     description: site.description,
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },

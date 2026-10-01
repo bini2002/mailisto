@@ -8,7 +8,7 @@ interface Props {
 
 export function CTASection({
   title = "Find out what your list could be earning.",
-  body = "Start with a free Klaviyo revenue audit, delivered within 48 hours. You’ll get clear, prioritised recommendations, whether or not we work together.",
+  body = "Start with a free email and SMS revenue audit, delivered within 48 hours. You’ll get clear, prioritised recommendations, whether or not we work together.",
 }: Props) {
   return (
     <section aria-label="Get started" className="bg-lime text-ink">

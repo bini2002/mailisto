@@ -302,6 +302,37 @@
 }
 
 /* ------------------------------------------------------------------
+   Hero slider: slides dissolve into each other (fade + soft blur).
+------------------------------------------------------------------- */
+.dissolve {
+  opacity: 0;
+  filter: blur(6px);
+  transform: scale(1.015);
+  transition:
+    opacity 1.1s ease,
+    filter 1.1s ease,
+    transform 1.6s ease;
+  pointer-events: none;
+}
+.dissolve.is-active {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  pointer-events: auto;
+}
+@keyframes slide-progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.slide-progress {
+  animation: slide-progress linear forwards;
+}
+
+/* ------------------------------------------------------------------
    CTA "LED" beam: a short light that travels around the button border.
    A masked conic ring on ::before, so the button keeps its own background.
 ------------------------------------------------------------------- */
@@ -396,6 +427,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .dissolve {
+    filter: none;
+    transform: none;
+  }
   .beam::before,
   .badge-48-dot {
     animation: none;

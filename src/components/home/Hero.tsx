@@ -28,19 +28,19 @@ export function Hero() {
                 aria-hidden="true"
                 className="size-2 bg-lime ring-1 ring-ink/20"
               />
-              Klaviyo email agency
+              Email &amp; SMS agency
             </span>
             <span aria-hidden="true" className="h-px w-6 bg-line-strong" />
             For Shopify brands
           </p>
 
-          <h1 id="hero-title" className="mt-7 text-display font-semibold">
+          <h1 id="hero-title" className="mt-7 text-[clamp(2.5rem,1.2rem+4.3vw,4.7rem)] leading-[1.04] font-semibold">
             Your email list should be making you{" "}
             <span className="mark">more money.</span>
           </h1>
 
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted sm:text-[1.2rem]">
-            Mailisto builds and runs the Klaviyo flows, campaigns and
+            Mailisto builds and runs the email and SMS flows, campaigns and
             segmentation that turn your customer data into repeat purchases, and
             revenue you can measure.
           </p>
@@ -56,7 +56,7 @@ export function Hero() {
           </div>
 
           <p className="mt-5 text-sm text-muted">
-            A free, practical review of your Klaviyo account,{" "}
+            A free, practical review of your email and SMS,{" "}
             <strong className="font-semibold text-ink">delivered within 48 hours</strong>. No obligation.
           </p>
         </div>

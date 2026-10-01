@@ -12,6 +12,7 @@ const nav = [
   { href: "/admin/leads/audit", label: "Audit leads" },
   { href: "/admin/leads/contact", label: "Messages" },
   { href: "/admin/posts", label: "Blog" },
+  { href: "/admin/hero-slides", label: "Hero slides" },
   { href: "/admin/designs", label: "Email designs" },
   { href: "/admin/case-studies", label: "Case studies" },
   { href: "/admin/settings", label: "Settings" },

@@ -5,35 +5,35 @@ import { AuditTurnaround } from "@/components/home/AuditTurnaround";
 import { JsonLd, breadcrumbLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Free Klaviyo Revenue Audit",
+  title: "Free Email & SMS Revenue Audit",
   description:
-    "Get a free, practical audit of your Klaviyo account within 48 hours. We review flows, campaigns, segmentation, deliverability and creative, then send prioritised recommendations.",
+    "Get a free, practical audit of your email and SMS within 48 hours. We review flows, campaigns, segmentation, deliverability and creative, then send prioritised recommendations.",
   alternates: { canonical: "/audit" },
-  openGraph: { url: "/audit", title: "Free Klaviyo Revenue Audit | Mailisto" },
+  openGraph: { url: "/audit", title: "Free Email & SMS Revenue Audit | Mailisto" },
 };
 
 const steps = [
   { t: "You send the basics", d: "Two short steps: who you are, and a little about your store." },
-  { t: "We review your account", d: "With a read-only Klaviyo user, we work through flows, campaigns, segments, deliverability and creative." },
+  { t: "We review your account", d: "With a read-only user, we work through flows, campaigns, SMS, segments, deliverability and creative." },
   { t: "You get the findings in 48 hours", d: "Within 48 hours of access: a clear write-up with recommendations ranked by likely revenue impact and effort." },
 ];
 
 export default function AuditPage() {
   return (
     <>
-      <JsonLd data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "Free Klaviyo audit", path: "/audit" }])} />
+      <JsonLd data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "Free email & SMS audit", path: "/audit" }])} />
       <section className="border-b border-line">
         <div className="container-x grid gap-12 pt-12 pb-20 sm:pt-16 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-12 lg:pt-20 lg:pb-28">
           <div className="hero-in lg:col-span-6 lg:row-start-1">
             <p className="label flex items-center gap-3 text-muted">
               <span aria-hidden="true" className="size-2 bg-lime ring-1 ring-ink/20" />
-              Free Klaviyo revenue audit
+              Free email &amp; SMS revenue audit
             </p>
             <h1 className="mt-6 text-[clamp(2.4rem,1.5rem+3.6vw,4.4rem)] leading-[1.03] font-semibold">
               Find the revenue your email program is <span className="mark">leaving behind.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              A practical, specific review of your Klaviyo account by people who only do ecommerce email. Not a sales call dressed up as an audit.
+              A practical, specific review of your email and SMS by people who only do ecommerce email and SMS. Not a sales call dressed up as an audit.
             </p>
             <AuditTurnaround tone="light" className="mt-8 max-w-xl" />
           </div>

@@ -13,7 +13,7 @@ export const organizationLd = {
   url: site.url,
   logo: `${site.url}/icon.svg`,
   description: site.description,
-  knowsAbout: ["Klaviyo", "Email marketing", "Shopify", "Ecommerce retention", "Lifecycle marketing", "Email deliverability"],
+  knowsAbout: ["Email marketing", "SMS marketing", "Shopify", "Ecommerce retention", "Lifecycle marketing", "Email deliverability"],
 };
 
 export const websiteLd = {

@@ -5,8 +5,9 @@ export const site = {
   url: SITE_URL,
   tagline: "Make your list your most profitable channel.",
   description:
-    "Mailisto is a Klaviyo email marketing agency for Shopify brands. We build and run the flows, campaigns and segmentation that turn customer data into repeat revenue.",
-  shortDescription: "Klaviyo email marketing for Shopify brands.",
+    "Mailisto is an email and SMS marketing agency for Shopify brands. We build and run the flows, campaigns and segmentation that turn customer data into repeat revenue.",
+  shortDescription: "Email & SMS marketing for Shopify brands.",
+  title: "Mailisto | Email & SMS Marketing Agency for Shopify Brands",
 } as const;
 
 export const mainNav = [

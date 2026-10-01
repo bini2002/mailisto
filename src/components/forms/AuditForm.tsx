@@ -99,7 +99,7 @@ export function AuditForm({ idPrefix = "audit" }: { idPrefix?: string }) {
         <ol className="mt-5 space-y-4 border-t border-line pt-5 text-[0.95rem]">
           <li className="flex gap-4">
             <span className="label pt-1 text-muted">01</span>
-            <span>We review your details and store, and reply by email to arrange access to your Klaviyo account (a read-only user is fine).</span>
+            <span>We review your details and store, and reply by email to arrange access to your email and SMS platform (a read-only user is fine).</span>
           </li>
           <li className="flex gap-4">
             <span className="label pt-1 text-muted">02</span>
@@ -166,7 +166,7 @@ export function AuditForm({ idPrefix = "audit" }: { idPrefix?: string }) {
           required
           maxLength={300}
         />
-        <Button type="submit" size="lg" className="mt-2 w-full" arrow beam>
+        <Button type="submit" size="lg" className="mt-2 w-full" arrow>
           Continue
         </Button>
       </fieldset>
@@ -175,9 +175,9 @@ export function AuditForm({ idPrefix = "audit" }: { idPrefix?: string }) {
         <legend className="sr-only">About your store</legend>
         <div className="grid gap-5 sm:grid-cols-2">
           <SelectField id={id("revenue_range")} name="revenue_range" label="Monthly online revenue" options={REVENUE_RANGES} value={values.revenue_range} onChange={set("revenue_range")} error={fieldError("revenue_range")} required />
-          <SelectField id={id("platform")} name="platform" label="Current email platform" options={PLATFORMS} value={values.platform} onChange={set("platform")} error={fieldError("platform")} required />
+          <SelectField id={id("platform")} name="platform" label="Current email / SMS platform" options={PLATFORMS} value={values.platform} onChange={set("platform")} error={fieldError("platform")} required />
           <SelectField id={id("list_size")} name="list_size" label="Approximate list size" options={LIST_SIZES} value={values.list_size} onChange={set("list_size")} error={fieldError("list_size")} required />
-          <SelectField id={id("challenge")} name="challenge" label="Biggest email challenge" options={CHALLENGES} value={values.challenge} onChange={set("challenge")} error={fieldError("challenge")} required />
+          <SelectField id={id("challenge")} name="challenge" label="Biggest email or SMS challenge" options={CHALLENGES} value={values.challenge} onChange={set("challenge")} error={fieldError("challenge")} required />
         </div>
         <TextAreaField
           id={id("details")}
@@ -194,7 +194,7 @@ export function AuditForm({ idPrefix = "audit" }: { idPrefix?: string }) {
           <Button type="button" variant="outline" size="lg" onClick={() => setStep(1)} disabled={pending}>
             Back
           </Button>
-          <Button type="submit" size="lg" className="flex-1" loading={pending} arrow beam>
+          <Button type="submit" size="lg" className="flex-1" loading={pending} arrow>
             {pending ? "Sending" : "Get My Free Audit"}
             {!pending && <AuditBadge />}
           </Button>

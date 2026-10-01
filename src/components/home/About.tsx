@@ -2,7 +2,7 @@ import { SectionHeading } from "../ui/SectionHeading";
 
 const points = [
   { title: "Ecommerce first", body: "We think in AOV, repeat rate, margin and customer lifetime value. Open rates are a signal, not the goal." },
-  { title: "Klaviyo specialists", body: "One platform, known deeply. Flows, segments, predictive data, reporting and deliverability settings included." },
+  { title: "Email & SMS specialists", body: "The major platforms, known deeply. Flows, segments, predictive data, reporting and deliverability settings included." },
   { title: "Revenue-focused strategy", body: "Every flow and campaign has a commercial job. If we can’t say what it’s for, we don’t send it." },
   { title: "Creative and technical", body: "Design, copy and build under one roof, so good ideas don’t get lost between teams." },
   { title: "Testing built in", body: "Structured tests with one question each, so every month you know a little more about what works." },
@@ -24,7 +24,7 @@ export function About() {
           }
           intro={
             <p>
-              Mailisto is a specialist Klaviyo agency for Shopify and ecommerce brands. Email and retention are our focus, so your list gets the strategy, creative and attention it deserves.
+              Mailisto is a specialist email and SMS agency for Shopify and ecommerce brands. Email, SMS and retention are our focus, so your list gets the strategy, creative and attention it deserves.
             </p>
           }
         />

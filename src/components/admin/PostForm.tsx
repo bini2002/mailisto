@@ -4,7 +4,7 @@ import { ActionButton, AdminForm } from "./AdminForm";
 import { AdminCheckbox, AdminInput, AdminSection, AdminSelect, AdminTextarea } from "./AdminFields";
 import { ImageUploader } from "./ImageUploader";
 
-const CATEGORIES = ["Klaviyo", "Flows", "Campaigns", "Segmentation", "Deliverability", "Design", "Copywriting", "Retention", "Strategy", "BFCM"];
+const CATEGORIES = ["Email", "SMS", "Klaviyo", "Flows", "Campaigns", "Segmentation", "Deliverability", "Design", "Copywriting", "Retention", "Strategy", "BFCM"];
 
 export function PostForm({ post }: { post?: BlogPost }) {
   return (

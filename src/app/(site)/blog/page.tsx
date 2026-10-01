@@ -10,9 +10,9 @@ import { getPublishedPosts } from "@/lib/data";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Blog: Klaviyo & Ecommerce Email Marketing",
+  title: "Blog: Email & SMS Marketing for Ecommerce",
   description:
-    "Practical articles on Klaviyo flows, campaigns, segmentation, deliverability and retention for Shopify and ecommerce brands.",
+    "Practical articles on email and SMS flows, campaigns, segmentation, deliverability and retention for Shopify and ecommerce brands.",
   alternates: { canonical: "/blog" },
   openGraph: { url: "/blog", title: "Blog | Mailisto" },
 };
@@ -27,7 +27,7 @@ export default async function BlogPage() {
       <JsonLd data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "Blog", path: "/blog" }])} />
       <PageHeader
         label="Blog"
-        title="Klaviyo, retention and ecommerce email, explained properly."
+        title="Email, SMS and retention, explained properly."
         intro={<p>Practical notes for founders and ecommerce teams who want email to pull its weight.</p>}
       />
       <section className="section-y">

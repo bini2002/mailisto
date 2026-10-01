@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { emailConcepts } from "@/content/email-concepts";
+import { defaultHeroSlides } from "@/content/hero-slides";
 import { starterPosts } from "@/content/starter-posts";
 import { requireAdmin } from "@/lib/auth";
 import { isSupabaseConfigured } from "@/lib/env";
@@ -113,7 +114,7 @@ function sniffImage(buf: Uint8Array): { ext: string; mime: string } | null {
 export async function uploadImage(fd: FormData): Promise<AdminResult> {
   const { supabase } = await requireAdmin();
   const file = fd.get("file");
-  const folder = ["designs", "blog", "case-studies", "misc"].includes(String(fd.get("folder"))) ? String(fd.get("folder")) : "misc";
+  const folder = ["designs", "blog", "case-studies", "hero", "misc"].includes(String(fd.get("folder"))) ? String(fd.get("folder")) : "misc";
 
   if (!(file instanceof File) || file.size === 0) return { ok: false, message: "Choose an image to upload." };
   if (file.size > MAX_UPLOAD) return { ok: false, message: "Images must be 5 MB or smaller." };
@@ -257,6 +258,55 @@ export async function deleteDesign(fd: FormData): Promise<AdminResult> {
   refreshPublic("/work");
   revalidatePath("/admin/designs");
   return { ok: true, message: "Design deleted.", redirectTo: "/admin/designs" };
+}
+
+// ---------------------------------------------------------------------------
+// Hero slides (homepage hero, right-hand side)
+// ---------------------------------------------------------------------------
+
+export async function saveHeroSlide(fd: FormData): Promise<AdminResult> {
+  const { supabase } = await requireAdmin();
+  const id = str(fd, "id", 60) || null;
+  const image_url = imageUrl(fd, "image_url");
+  const concept_template = opt(fd, "concept_template", 60);
+
+  if (!image_url && !concept_template) return { ok: false, message: "Upload an image (or choose a built-in design)." };
+  if (concept_template && !emailConcepts.some((c) => c.key === concept_template)) return { ok: false, message: "Unknown built-in design." };
+
+  const notes = longText(fd, "notes", 600)
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .slice(0, 4)
+    .join("\n");
+
+  const row = {
+    label: opt(fd, "label", 80),
+    image_url,
+    image_alt: opt(fd, "image_alt", 200),
+    concept_template,
+    caption: opt(fd, "caption", 120),
+    notes: notes || null,
+    sort_order: int(fd, "sort_order"),
+    published: bool(fd, "published"),
+  };
+
+  const q = id ? supabase.from("hero_slides").update(row).eq("id", id).select("id").single() : supabase.from("hero_slides").insert(row).select("id").single();
+  const { data, error } = await q;
+  if (error) return dbError(error.message);
+
+  refreshPublic();
+  revalidatePath("/admin/hero-slides");
+  return { ok: true, message: id ? "Slide saved." : "Slide created.", redirectTo: id ? undefined : `/admin/hero-slides/${data.id}` };
+}
+
+export async function deleteHeroSlide(fd: FormData): Promise<AdminResult> {
+  const { supabase } = await requireAdmin();
+  const { error } = await supabase.from("hero_slides").delete().eq("id", str(fd, "id", 60));
+  if (error) return dbError(error.message);
+  refreshPublic();
+  revalidatePath("/admin/hero-slides");
+  return { ok: true, message: "Slide deleted.", redirectTo: "/admin/hero-slides" };
 }
 
 // ---------------------------------------------------------------------------
@@ -439,7 +489,24 @@ export async function importStarterContent(): Promise<AdminResult> {
   if (d.error) return dbError(d.error.message);
   if (p.error) return dbError(p.error.message);
 
+  // Hero slides have no natural unique key, so only seed them into an empty table.
+  const { count } = await supabase.from("hero_slides").select("id", { count: "exact", head: true });
+  if (!count) {
+    const slides = defaultHeroSlides.map((s, i) => ({
+      label: s.label,
+      image_url: s.image_url ?? null,
+      image_alt: s.image_alt ?? null,
+      concept_template: s.concept_template ?? null,
+      caption: s.caption,
+      notes: s.notes,
+      sort_order: i,
+      published: true,
+    }));
+    const h = await supabase.from("hero_slides").insert(slides);
+    if (h.error) return dbError(h.error.message);
+  }
+
   refreshPublic("/blog", "/work");
   revalidatePath("/admin", "layout");
-  return { ok: true, message: "Starter concepts and articles imported." };
+  return { ok: true, message: "Starter designs, hero slides and articles imported." };
 }

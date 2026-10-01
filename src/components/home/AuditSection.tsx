@@ -37,10 +37,10 @@ export function AuditSection() {
             <p className="label flex items-center gap-3 text-muted-dark">
               <span className="text-lime">06</span>
               <span aria-hidden="true" className="h-px w-8 bg-line-dark" />
-              Free Klaviyo revenue audit
+              Free email &amp; SMS revenue audit
             </p>
             <h2 id="audit-title" className="mt-5 text-h2 font-semibold">
-              Your Klaviyo account probably has revenue <span className="text-lime">hiding in it.</span>
+              Your email and SMS account probably has revenue <span className="text-lime">hiding in it.</span>
             </h2>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-dark">
               Get a practical review of your email program. We&rsquo;ll show you where flows, campaigns, segmentation, deliverability and lifecycle strategy could be earning more.

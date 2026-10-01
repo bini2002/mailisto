@@ -1,11 +1,58 @@
 import "server-only";
 import { cache } from "react";
 import { conceptsByKey, emailConcepts, type EmailConcept } from "@/content/email-concepts";
+import { defaultHeroSlides } from "@/content/hero-slides";
 import { starterPosts } from "@/content/starter-posts";
 import { getPublicSupabase } from "./supabase/public";
-import type { BlogPost, CaseStudy, EmailDesign, SiteSettings } from "./types";
+import type { BlogPost, CaseStudy, EmailDesign, HeroSlide, SiteSettings } from "./types";
 
 export type DesignView = EmailDesign & { concept: EmailConcept | null };
+export type HeroSlideView = Pick<HeroSlide, "id" | "label" | "image_url" | "image_alt" | "caption"> & {
+  notes: string[];
+  concept: EmailConcept | null;
+};
+
+function toSlideView(s: Pick<HeroSlide, "id" | "label" | "image_url" | "image_alt" | "caption" | "notes" | "concept_template">): HeroSlideView {
+  return {
+    id: s.id,
+    label: s.label,
+    image_url: s.image_url,
+    image_alt: s.image_alt,
+    caption: s.caption,
+    notes: (s.notes ?? "").split("\n").map((l) => l.trim()).filter(Boolean).slice(0, 4),
+    concept: s.concept_template ? conceptsByKey[s.concept_template] ?? null : null,
+  };
+}
+
+function defaultSlides(): HeroSlideView[] {
+  return defaultHeroSlides.map((s, i) =>
+    toSlideView({
+      id: `default-${i}`,
+      label: s.label,
+      image_url: s.image_url ?? null,
+      image_alt: s.image_alt ?? null,
+      caption: s.caption,
+      notes: s.notes,
+      concept_template: s.concept_template ?? null,
+    }),
+  );
+}
+
+/** Published hero slides, in order. Falls back to the built-in set if none are published yet. */
+export const getHeroSlides = cache(async (): Promise<HeroSlideView[]> => {
+  const supabase = getPublicSupabase();
+  if (!supabase) return defaultSlides();
+  const { data, error } = await supabase
+    .from("hero_slides")
+    .select("id,label,image_url,image_alt,caption,notes,concept_template")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true })
+    .limit(8);
+  if (error) console.error("getHeroSlides", error.message);
+  const slides = (data ?? []).map(toSlideView).filter((s) => s.image_url || s.concept);
+  return slides.length ? slides : defaultSlides();
+});
 
 const POST_LIST_COLUMNS =
   "id,title,slug,excerpt,featured_image_url,featured_image_alt,category,author_name,status,featured,published_at,seo_title,seo_description,og_image_url,created_at,updated_at";

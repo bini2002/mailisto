@@ -4,7 +4,7 @@ import { ProcessStep, type Step } from "./ProcessStep";
 const steps: Step[] = [
   { name: "Audit", line: "Find where revenue is being lost.", body: "We review flows, campaigns, segments, deliverability, creative and reporting to see what is working and what isn’t.", output: "Prioritised findings" },
   { name: "Strategy", line: "Build the roadmap.", body: "A lifecycle plan and campaign calendar based on your products, margins, customers and buying cycles.", output: "Lifecycle map + calendar" },
-  { name: "Build", line: "Create the infrastructure.", body: "Flows, segments, templates, copy and creative, built properly in Klaviyo and connected to Shopify data.", output: "Live flows, templates, segments" },
+  { name: "Build", line: "Create the infrastructure.", body: "Flows, segments, templates, copy and creative, built properly on your platform and connected to Shopify data.", output: "Live flows, templates, segments" },
   { name: "Launch", line: "Deploy and monitor.", body: "Every send is QA’d across devices and clients, then monitored closely through its first weeks.", output: "Checked, monitored sends" },
   { name: "Test", line: "Learn what moves revenue.", body: "Structured tests on messaging, offers, design, timing and segmentation. One clear question per test.", output: "Testing roadmap" },
   { name: "Optimise", line: "Improve, continuously.", body: "Performance data feeds back into the plan each month. What earns gets more room; what doesn’t gets fixed.", output: "Monthly performance review" },

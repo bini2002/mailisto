@@ -22,7 +22,7 @@ export function Problem() {
           title={<>Most email lists are underworked.</>}
           intro={
             <p>
-              The subscribers are there. The customer data is there. But in most stores, Klaviyo is used as a sending tool rather than the revenue system it can be.
+              The subscribers are there. The customer data is there. But in most stores, email and SMS are used as sending tools rather than the revenue system they can be.
             </p>
           }
         />
