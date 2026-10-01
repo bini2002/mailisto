@@ -4,13 +4,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { PiPauseFill, PiPlayFill, PiSpeakerHighFill, PiSpeakerSlashFill } from "react-icons/pi";
 import type { HeroVideo as HeroVideoData } from "@/lib/data";
 
-/** Starting frame: up to 560px wide (86% of small screens), 16:9. */
+/** Starting frame: up to 560px wide (72% of small screens), 16:9. */
 const MAX_START_WIDTH = 560;
-const START_WIDTH_RATIO = 0.86;
+const START_WIDTH_RATIO = 0.72;
 const ASPECT = 9 / 16;
+/** The frame stops growing at 80% of the screen (below the sticky header). */
+const END_SCALE = 0.8;
 const START_RADIUS = 12;
-/** Fraction of the scroll track used for growing; the rest holds the full-screen frame. */
-const GROW_PORTION = 0.82;
+const END_RADIUS = 18;
+/** Fraction of the scroll track used for growing; the rest holds the finished frame. */
+const GROW_PORTION = 0.85;
+/** Smoothing time constant (ms): how softly the frame catches up with the scroll position. */
+const SMOOTHING_MS = 140;
 
 const clamp = (n: number, min = 0, max = 1) => Math.min(max, Math.max(min, n));
 const smoothstep = (t: number) => t * t * (3 - 2 * t);
@@ -21,15 +26,17 @@ const sourceType = (src: string) => {
 };
 
 /**
- * Hero video that starts as a small frame under the headline and grows to full screen as you scroll.
- * The frame box itself resizes inside a sticky stage, so the video always fills the frame at its
- * current size (scaled, not cropped to a window). It's absolutely positioned and contained, so the
- * resize stays local, and a light lerp on the scroll position keeps the motion smooth.
+ * Hero video that starts as a small frame under the headline and grows to 80% of the screen as you scroll.
+ * The frame is laid out once at its finished size; growth is a uniform scale of the video plus a
+ * clip-path, and the motion is a transform, so scrolling never re-lays out or resizes the video.
+ * A frame-rate independent ease on the scroll position keeps it smooth on wheels, trackpads and touch.
  */
 export function HeroVideo({ video }: { video: HeroVideoData }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+  const mediaRef = useRef<HTMLDivElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [muted, setMuted] = useState(true);
@@ -42,63 +49,85 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
     const track = trackRef.current;
     const stage = stageRef.current;
     const frame = frameRef.current;
-    if (!track || !stage || !frame) return;
+    const media = mediaRef.current;
+    if (!track || !stage || !frame || !media) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let target = 0;
-    let current = 0;
+    let target = window.scrollY;
+    let current = target;
     let raf = 0;
+    let last = 0;
     let trackTop = 0;
-    let trackHeight = 0;
+    let growEnd = 1;
     let vw = 0;
-    let vh = 0;
     let header = 0;
+    let avail = 0;
+    // Finished frame box (stage coordinates).
+    let W = 0;
+    let H = 0;
+    let L = 0;
+    let T = 0;
+    // The video box: 16:9, just big enough to cover the finished frame.
+    let MW = 0;
+    let MH = 0;
 
     const measure = () => {
       const rect = track.getBoundingClientRect();
       trackTop = rect.top + window.scrollY;
-      trackHeight = rect.height;
+      const vh = stage.clientHeight;
       vw = stage.clientWidth;
-      vh = stage.clientHeight;
-      // A sticky site header covers the top of the stage; centre the growing frame in the space below it.
+      // A sticky site header covers the top of the stage; the frame is centred in the space below it.
       const h = document.querySelector("header");
       header = h && getComputedStyle(h).position !== "static" ? h.getBoundingClientRect().height : 0;
+      avail = vh - header;
+      growEnd = Math.max(1, (trackTop + rect.height - vh) * GROW_PORTION);
+      W = vw * END_SCALE;
+      H = avail * END_SCALE;
+      L = (vw - W) / 2;
+      T = header + (avail - H) / 2;
+      Object.assign(frame.style, { left: `${L}px`, top: `${T}px`, right: "auto", bottom: "auto", width: `${W}px`, height: `${H}px` });
+      MW = Math.max(W, H / ASPECT);
+      MH = MW * ASPECT;
+      Object.assign(media.style, { left: `${(W - MW) / 2}px`, top: `${(H - MH) / 2}px`, width: `${MW}px`, height: `${MH}px` });
     };
 
-    const readTarget = () => {
-      // Grows from the very first pixel of scroll until the end of the growth portion of the track.
-      const distance = (trackTop + trackHeight - vh) * GROW_PORTION;
-      target = distance > 0 ? clamp(window.scrollY / distance) : 1;
+    const paint = (y: number) => {
+      const e = smoothstep(clamp(y / growEnd));
+      const w0 = Math.min(MAX_START_WIDTH, vw * START_WIDTH_RATIO, W);
+      const h0 = Math.min(w0 * ASPECT, H);
+      const w = w0 + (W - w0) * e;
+      const h = h0 + (H - h0) * e;
+      // Rides up with the page directly under the hero copy until it reaches the centre, then holds there.
+      const stageTop = Math.max(0, trackTop - y);
+      const top = Math.max(0, header + (avail - h) / 2 - stageTop);
+      const dy = top + h / 2 - (T + H / 2);
+      const ix = (W - w) / 2;
+      const iy = (H - h) / 2;
+      const r = START_RADIUS + (END_RADIUS - START_RADIUS) * e;
+      frame.style.transform = `translate3d(0, ${dy}px, 0)`;
+      frame.style.clipPath = `inset(${iy}px ${ix}px round ${r}px)`;
+      // Uniform scale so the video covers the visible frame, never stretched. In the small 16:9
+      // frame this shows the whole shot; it only crops if the finished frame isn't 16:9 (phones).
+      media.style.transform = `scale(${Math.max(w / MW, h / MH)})`;
+      if (controlsRef.current) controlsRef.current.style.transform = `translate3d(${-ix}px, ${-iy}px, 0)`;
     };
 
-    const paint = (p: number) => {
-      const e = smoothstep(p);
-      const w0 = Math.min(MAX_START_WIDTH, vw * START_WIDTH_RATIO);
-      const h0 = w0 * ASPECT;
-      const w = w0 + (vw - w0) * e;
-      const h = h0 + (vh - h0) * e;
-      const side = (vw - w) / 2;
-      // Starts directly under the hero copy, then eases to the visual centre as the stage pins.
-      const pin = smoothstep(trackTop > 0 ? clamp(window.scrollY / trackTop) : 1);
-      const top = Math.max(0, Math.min(header + (vh - header - h) / 2, vh - h)) * pin;
-      const r = START_RADIUS * (1 - e);
-      // The frame itself resizes, so the whole video is always fitted to it (never a cropped window).
-      frame.style.left = `${side}px`;
-      frame.style.top = `${top}px`;
-      frame.style.width = `${w}px`;
-      frame.style.height = `${h}px`;
-      frame.style.borderRadius = `${r}px`;
-    };
-
-    const tick = () => {
+    const tick = (now: number) => {
+      const dt = last ? Math.min(64, now - last) : 16;
+      last = now;
       const diff = target - current;
-      current = Math.abs(diff) < 0.0005 ? target : current + diff * 0.14;
+      current = Math.abs(diff) < 0.5 ? target : current + diff * (1 - Math.exp(-dt / SMOOTHING_MS));
       paint(current);
-      raf = current === target ? 0 : requestAnimationFrame(tick);
+      if (current === target) {
+        raf = 0;
+        last = 0;
+      } else {
+        raf = requestAnimationFrame(tick);
+      }
     };
 
     const onScroll = () => {
-      readTarget();
+      target = window.scrollY;
       if (reduce) {
         current = target;
         paint(current);
@@ -109,12 +138,12 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
 
     const onResize = () => {
       measure();
-      readTarget();
-      current = target;
+      target = current = window.scrollY;
       paint(current);
     };
 
     onResize();
+    frame.classList.add("is-ready");
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     return () => {
@@ -177,17 +206,11 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
       <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden">
         <div
           ref={frameRef}
-          className="absolute overflow-hidden bg-ink-3 [contain:layout_paint]"
-          // First paint (before JS): the same small starting frame, so nothing jumps on hydration.
-          style={{
-            left: "calc(50% - min(280px, 43vw))",
-            top: 0,
-            width: "min(560px, 86vw)",
-            height: "calc(min(560px, 86vw) * 0.5625)",
-            borderRadius: START_RADIUS,
-          }}
+          // Laid out at its finished size by JS; hidden until then so nothing jumps on hydration.
+          className="hero-frame absolute inset-x-[10%] top-[10%] bottom-[10%] overflow-hidden bg-ink-3 will-change-transform"
+          style={{ clipPath: `inset(0px round ${END_RADIUS}px)` }}
         >
-          <div className="absolute inset-0">
+          <div ref={mediaRef} className="absolute inset-0 will-change-transform">
             {hasVideo ? (
               <video
                 ref={videoRef}
@@ -212,7 +235,7 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
             )}
           </div>
           {hasVideo && (
-            <div className="absolute right-3 bottom-3 flex gap-2 sm:right-4 sm:bottom-4">
+            <div ref={controlsRef} className="absolute right-3 bottom-3 flex gap-2 will-change-transform sm:right-4 sm:bottom-4">
               <button
                 type="button"
                 onClick={togglePlay}

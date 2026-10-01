@@ -19,7 +19,7 @@ function rowPath(j: number) {
       Math.sin(x * 0.0019 - j * 0.42) * 28;
     parts.push(`M${Math.round(x)} ${Math.round(y)}h0`);
   }
-  return { d: parts.join(""), width: 1.4 + d * 2.4, opacity: 0.08 + d * 0.32 };
+  return { d: parts.join(""), width: 1.4 + d * 2.4, opacity: 0.05 + d * 0.2 };
 }
 
 const rows = Array.from({ length: ROWS }, (_, j) => rowPath(j));
@@ -29,7 +29,7 @@ export function DotWave({ className }: { className?: string }) {
     <div aria-hidden="true" className={className}>
       <svg viewBox={`0 0 ${W} 600`} preserveAspectRatio="xMidYMid slice" className="dot-wave h-full w-full">
         {rows.map((r, j) => (
-          <path key={j} d={r.d} stroke="#ffffff" strokeOpacity={r.opacity} strokeWidth={r.width} strokeLinecap="round" fill="none" />
+          <path key={j} d={r.d} stroke="currentColor" strokeOpacity={r.opacity} strokeWidth={r.width} strokeLinecap="round" fill="none" />
         ))}
       </svg>
     </div>

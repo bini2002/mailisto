@@ -110,7 +110,7 @@ Any Node host that supports Next.js 16 works too (`npm run build && npm start`).
 
 **Markdown supported in articles:** `## Heading`, `### Subheading`, `**bold**`, `*italic*`, `- lists`, `1. lists`, `> quotes`, `` `code` ``, fenced code blocks, `---`, `[links](https://…)`, `![alt text](https://image-url)`. Content is rendered as React elements (never raw HTML), so it can't inject scripts.
 
-**Homepage hero video:** the hero shows a small video frame under the headline that grows to full screen as visitors scroll. It is muted by default, with sound and pause buttons. Either drop the files into `public/videos/` (`hero.mp4`, optionally `hero.webm` and `hero-poster.jpg`) or set a video URL and poster in **Settings** (the settings win). Use a 16:9 video, ideally 1920×1080, under 10 MB, 15–45 seconds, and keep the key action near the centre because phones crop the sides at full screen. Until a video is set, the poster image is shown.
+**Homepage hero video:** the hero shows a small video frame under the headline that grows to 80% of the screen as visitors scroll. It is muted by default, with sound and pause buttons. Either drop the files into `public/videos/` (`hero.mp4`, optionally `hero.webm` and `hero-poster.jpg`) or set a video URL and poster in **Settings** (the settings win). Use a 16:9 video, ideally 1920×1080, under 10 MB, 15–45 seconds, and keep the key action near the centre because phones crop the sides once the frame grows. Until a video is set, the poster image is shown.
 
 **Uploading email screenshots:** export the full email at 600–1200px wide as PNG, JPG or WebP (max 5 MB). The site never stretches it. Cards show the top of the email, and the detail view shows the whole email.
 

@@ -9,17 +9,17 @@ export async function Hero() {
 
   return (
     // No overflow clipping on the section: the video stage below is position: sticky.
-    <section aria-labelledby="hero-title" className="relative bg-ink text-white">
+    <section aria-labelledby="hero-title" className="relative border-b border-line">
       <div className="relative overflow-hidden">
-        <DotWave className="pointer-events-none absolute inset-x-0 bottom-0 h-[78%] [mask-image:linear-gradient(to_bottom,transparent,black_35%,black_70%,transparent)]" />
+        <DotWave className="pointer-events-none absolute text-ink inset-x-0 bottom-0 h-[78%] [mask-image:linear-gradient(to_bottom,transparent,black_35%,black_70%,transparent)]" />
 
         <div className="container-x hero-in relative flex flex-col items-center pt-14 pb-10 text-center sm:pt-20 sm:pb-12">
-          <p className="label inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-2xl border border-lime/70 sm:rounded-full px-4 py-2 text-muted-dark">
-            <span className="inline-flex items-center gap-2 text-white">
-              <span aria-hidden="true" className="size-2 bg-lime" />
+          <p className="label inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-2xl border border-line-strong bg-paper px-4 py-2 text-muted sm:rounded-full">
+            <span className="inline-flex items-center gap-2 text-ink">
+              <span aria-hidden="true" className="size-2 bg-lime ring-1 ring-ink/20" />
               Email &amp; SMS agency
             </span>
-            <span aria-hidden="true" className="hidden h-px w-6 bg-line-dark sm:block" />
+            <span aria-hidden="true" className="hidden h-px w-6 bg-line-strong sm:block" />
             For Shopify brands
           </p>
 
@@ -28,7 +28,7 @@ export async function Hero() {
             <span className="mark">more money.</span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-dark sm:text-[1.2rem]">
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted sm:text-[1.2rem]">
             Mailisto builds and runs the email and SMS flows, campaigns and
             segmentation that turn your customer data into repeat purchases, and
             revenue you can measure.
@@ -39,14 +39,14 @@ export async function Hero() {
               {auditCta.label}
               <AuditBadge />
             </LinkButton>
-            <LinkButton href={talkCta.href} size="lg" variant="outline-light">
+            <LinkButton href={talkCta.href} size="lg" variant="outline">
               {talkCta.label}
             </LinkButton>
           </div>
 
-          <p className="mt-5 text-sm text-muted-dark">
+          <p className="mt-5 text-sm text-muted">
             A free, practical review of your email and SMS,{" "}
-            <strong className="font-semibold text-white">delivered within 48 hours</strong>. No obligation.
+            <strong className="font-semibold text-ink">delivered within 48 hours</strong>. No obligation.
           </p>
         </div>
       </div>

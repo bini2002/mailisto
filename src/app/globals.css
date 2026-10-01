@@ -466,3 +466,11 @@
     transform: translate3d(1.5%, -2%, 0) scale(1.05);
   }
 }
+
+/* Hero video frame: laid out by JS, so fade it in once it has its real size (no jump on hydration). */
+.hero-frame {
+  transition: opacity 0.6s ease;
+}
+html.js .hero-frame:not(.is-ready) {
+  opacity: 0;
+}
