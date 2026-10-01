@@ -1,12 +1,12 @@
 import { SectionHeading } from "../ui/SectionHeading";
 
 const points = [
-  { title: "We think like shop owners", body: "Orders, margins and repeat customers. Open rates are a signal, not the goal." },
-  { title: "Platform-flexible", body: "Klaviyo, Omnisend, Attentive, Postscript and more. We work with what fits your store, including the weird settings nobody reads." },
-  { title: "Every message has a job", body: "If we can’t explain why an email or text exists, it doesn’t get sent." },
-  { title: "Design, copy and set-up", body: "One team under one roof, so good ideas don’t get lost between three freelancers." },
-  { title: "Testing built in", body: "Small experiments every month, so you always know a bit more about what actually works." },
-  { title: "We play the long game", body: "We care about order number ten, not just the next campaign." },
+  { title: "Ecommerce first", body: "We think in AOV, repeat rate, margin and customer lifetime value. Open rates are a signal, not the goal." },
+  { title: "Email & SMS specialists", body: "The major platforms, known deeply. Flows, segments, predictive data, reporting and deliverability settings included." },
+  { title: "Revenue-focused strategy", body: "Every flow and campaign has a commercial job. If we can’t say what it’s for, we don’t send it." },
+  { title: "Creative and technical", body: "Design, copy and build under one roof, so good ideas don’t get lost between teams." },
+  { title: "Testing built in", body: "Structured tests with one question each, so every month you know a little more about what works." },
+  { title: "Lifecycle thinking", body: "We build for the second, third and tenth order, not just the next campaign." },
 ];
 
 export function About() {
@@ -19,12 +19,12 @@ export function About() {
           label="About Mailisto"
           title={
             <>
-              We do one thing: make email and SMS <span className="mark">make you money.</span>
+              We focus on one thing: making ecommerce email <span className="mark">work harder.</span>
             </>
           }
           intro={
             <p>
-              Mailisto is an email and SMS marketing agency for Shopify and ecommerce brands. It&rsquo;s our whole job, so your list gets our full attention (and slightly too much of our weekends).
+              Mailisto is a specialist email and SMS agency for Shopify and ecommerce brands. Email, SMS and retention are our focus, so your list gets the strategy, creative and attention it deserves.
             </p>
           }
         />

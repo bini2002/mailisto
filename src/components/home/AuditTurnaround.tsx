@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 const stops = [
   { at: "Hour 0", label: "You request the audit" },
-  { at: "Access", label: "View-only access to your platform" },
+  { at: "Access", label: "Read-only user added" },
   { at: "Hour 48", label: "Written findings in your inbox" },
 ];
 

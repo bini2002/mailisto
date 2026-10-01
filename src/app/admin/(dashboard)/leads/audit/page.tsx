@@ -14,7 +14,7 @@ export default async function AuditLeadsPage({ searchParams }: { searchParams: P
 
   return (
     <>
-      <AdminPageHeader title="Audit leads" description="Requests from the free email & SMS audit form." />
+      <AdminPageHeader title="Audit leads" description="Requests from the free audit form." />
       <nav aria-label="Filter by status" className="mb-4 flex flex-wrap gap-2 text-sm">
         {["all", ...AUDIT_STATUSES].map((s) => {
           const active = (status ?? "all") === s;

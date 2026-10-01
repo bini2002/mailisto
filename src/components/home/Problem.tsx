@@ -2,13 +2,13 @@ import Link from "next/link";
 import { SectionHeading } from "../ui/SectionHeading";
 
 const problems = [
-  { title: "The welcome email from 2021", body: "Set up once, never touched again. A basic cart reminder, and that’s the whole system." },
-  { title: "Campaigns “when there’s time”", body: "Which, let’s be honest, is never in November." },
-  { title: "Everyone gets the same message", body: "Your best customer and a one-time discount hunter get identical emails and texts." },
-  { title: "Pretty emails that don’t sell", body: "Lovely design, unclear offer. Nothing tells people what to do next." },
-  { title: "SMS sitting on the bench", body: "Either unused, or blasting the same discount as email. Neither makes money." },
-  { title: "Reports full of the wrong numbers", body: "Great open rates. No idea which messages actually made money." },
-  { title: "The spam folder", body: "Inbox placement slips quietly, and revenue follows it down. Nobody tells you." },
+  { title: "Flows are underbuilt", body: "A single welcome email and a basic cart reminder, set up once and never revisited." },
+  { title: "Campaigns are inconsistent", body: "Sent when someone has time, to whoever happens to be on the list." },
+  { title: "Segmentation is thin", body: "First-time buyers and loyal customers get exactly the same message." },
+  { title: "Emails look good but don’t sell", body: "Nice design, unclear offer. No hierarchy, no single action." },
+  { title: "Reporting explains nothing", body: "Open rates in a dashboard, but no clear view of which emails make money." },
+  { title: "Deliverability is an afterthought", body: "Until inbox placement slips and revenue quietly follows it down." },
+  { title: "Nobody really owns it", body: "Email sits between marketing, ecommerce and the founder’s to-do list." },
 ];
 
 export function Problem() {
@@ -19,10 +19,10 @@ export function Problem() {
           id="problem-title"
           index="01"
           label="The problem"
-          title={<>Most email and SMS lists are taking a nap.</>}
+          title={<>Most email lists are underworked.</>}
           intro={
             <p>
-              The subscribers are there. The customer data is there. The sales are… somewhere else. Usually because email and SMS are treated like a noticeboard instead of a salesperson.
+              The subscribers are there. The customer data is there. But in most stores, email and SMS are used as sending tools rather than the revenue system they can be.
             </p>
           }
         />
@@ -37,7 +37,7 @@ export function Problem() {
           ))}
           <li className="reveal flex flex-col justify-between gap-6 bg-ink p-7 text-white sm:col-span-1 lg:col-span-2">
             <p className="max-w-lg text-xl leading-snug font-medium tracking-tight">
-              We fix this by treating email and SMS as one system: set up properly, sent consistently and judged by how much money it makes.
+              We fix this by treating email as a system: built properly, run consistently and measured by revenue.
             </p>
             <Link href="/audit" className="group label inline-flex items-center gap-2 text-lime">
               Get a free audit in 48 hours

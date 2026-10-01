@@ -13,11 +13,11 @@ export async function BlogPreview() {
           id="blog-title"
           index="08"
           label="From the blog"
-          title="Email & SMS advice, minus the waffle."
+          title="Notes on email, SMS and ecommerce retention."
           intro={
             <>
-              <p>Short, practical articles for busy shop owners. Read one with your coffee.</p>
-              <LinkButton href="/blog" variant="outline" size="sm" className="mt-6" arrow>
+              <p>Practical articles for founders and ecommerce teams. No filler.</p>
+              <LinkButton href="/blog" variant="outline" size="sm" className="mt-6" arrow beam={false}>
                 All articles
               </LinkButton>
             </>

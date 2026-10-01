@@ -1,12 +1,12 @@
 import { SectionHeading } from "../ui/SectionHeading";
 
 const stages = [
-  { name: "Attract", trigger: "Someone visits your store", build: "Sign-up offers that attract real buyers (not freebie hunters) and collect email and SMS consent properly.", channels: ["Email", "SMS"], job: "A list that actually buys" },
-  { name: "Welcome", trigger: "They subscribe", build: "A friendly hello that shows why you’re worth it before asking for money.", channels: ["Email", "SMS"], job: "Their first order" },
-  { name: "Convert", trigger: "They browse or leave a cart", build: "Gentle, well-timed reminders that rescue the sale without training people to wait for a discount.", channels: ["Email", "SMS"], job: "Rescue the sale" },
-  { name: "Keep", trigger: "They place an order", build: "Thanks, tips and the next thing they’ll love, based on what they actually bought.", channels: ["Email"], job: "Order number two" },
-  { name: "Reorder", trigger: "They’re about to run out", build: "A nudge right on time, so customers reorder before they go looking elsewhere.", channels: ["Email", "SMS"], job: "Steady repeat sales" },
-  { name: "Win back", trigger: "They’ve gone quiet", build: "A “we miss you” that doesn’t sound needy, and a polite goodbye for people who’ve moved on.", channels: ["Email"], job: "Bring them back, keep the list healthy" },
+  { name: "Acquire", trigger: "Signup form", build: "Forms and offers that grow a list of likely buyers, not just email addresses.", job: "Grow a list that buys" },
+  { name: "Welcome", trigger: "Added to list", build: "A welcome series that explains the brand and answers objections before selling.", job: "First purchase" },
+  { name: "Convert", trigger: "Viewed product · Started checkout", build: "Browse and cart abandonment flows that recover intent without over-discounting.", job: "Recover lost sales" },
+  { name: "Retain", trigger: "Placed order", build: "Post-purchase, cross-sell and VIP journeys built around what customers bought.", job: "Second order" },
+  { name: "Replenish", trigger: "Expected reorder date", build: "Reminders timed to real product usage, so customers reorder before they run out.", job: "Predictable repeat revenue" },
+  { name: "Win back", trigger: "No order past the usual window", build: "Win-back and sunset flows that re-engage lapsed customers or clean the list.", job: "Save customers, protect deliverability" },
 ];
 
 export function EmailSystem() {
@@ -20,13 +20,13 @@ export function EmailSystem() {
           label="How we think"
           title={
             <>
-              One-off blasts sell once.
-              <br className="hidden sm:block" /> A <span className="text-lime">system</span> sells every day.
+              Email isn&rsquo;t a campaign.
+              <br className="hidden sm:block" /> It&rsquo;s a <span className="text-lime">system.</span>
             </>
           }
           intro={
             <p>
-              Every stage of the customer journey gets its own message, by email, SMS or both, sent at the moment it matters. It keeps working while you sleep, eat, or finally take that holiday.
+              One-off sends make money on the day. A lifecycle system makes money every day, because every stage of the customer journey has a job and a message built for it.
             </p>
           }
         />
@@ -42,17 +42,10 @@ export function EmailSystem() {
               </span>
               <p className="label text-muted-dark lg:mt-6">{String(i + 1).padStart(2, "0")}</p>
               <h3 className="mt-2 text-2xl font-semibold tracking-tight">{s.name}</h3>
-              <p className="label mt-4 leading-relaxed text-lime normal-case tracking-[0.04em]">When: {s.trigger}</p>
-              <p className="mt-3 text-[0.93rem] leading-relaxed text-white/75">{s.build}</p>
-              <p className="mt-3 flex gap-1.5 pb-4">
-                {s.channels.map((c) => (
-                  <span key={c} className={`label px-1.5 py-1 text-[0.62rem] ${c === "SMS" ? "bg-lime text-ink" : "border border-line-dark text-white/80"}`}>
-                    {c}
-                  </span>
-                ))}
-              </p>
+              <p className="label mt-4 leading-relaxed text-lime normal-case tracking-[0.04em]">Trigger: {s.trigger}</p>
+              <p className="mt-3 pb-4 text-[0.93rem] leading-relaxed text-white/75">{s.build}</p>
               <p className="mt-4 border-t border-line-dark pt-3 text-sm lg:mt-auto">
-                <span className="text-muted-dark">Goal: </span>
+                <span className="text-muted-dark">Job: </span>
                 {s.job}
               </p>
             </li>
@@ -64,12 +57,12 @@ export function EmailSystem() {
           <div className="bg-ink-3 p-6 lg:col-span-7">
             <p className="label text-lime">Campaign layer</p>
             <p className="mt-3 text-white/80">
-              Launches, sales, drops and seasonal moments, by email and SMS, sent to the people they’re actually meant for.
+              Launches, promotions, education and seasonal moments run across every stage, each sent to the segment it was written for.
             </p>
           </div>
           <div className="bg-ink-3 p-6 lg:col-span-5">
             <p className="label text-lime">Data layer</p>
-            <p className="mt-3 text-white/80">Segments, tests and revenue reports decide who gets what, and show which messages are actually making money.</p>
+            <p className="mt-3 text-white/80">Segmentation, testing and revenue reporting decide who gets what, and show which parts of the system are earning.</p>
           </div>
         </div>
       </div>

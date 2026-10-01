@@ -13,9 +13,9 @@ export default function OgImage() {
           <div style={{ fontSize: 40, fontWeight: 700, letterSpacing: -1.5 }}>mailisto</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05, letterSpacing: -3, maxWidth: 1000 }}>Your subscribers should be making you more money.</div>
+          <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05, letterSpacing: -3, maxWidth: 1000 }}>Your email list should be making you more money.</div>
           <div style={{ display: "flex", marginTop: 36, fontSize: 26, color: "#A4A49D", gap: 18 }}>
-            <span style={{ color: "#B8FA3C" }}>Email & SMS marketing</span>
+            <span style={{ color: "#B8FA3C" }}>Email & SMS agency</span>
             <span>·</span>
             <span>For Shopify brands</span>
           </div>

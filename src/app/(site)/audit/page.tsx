@@ -5,16 +5,16 @@ import { AuditTurnaround } from "@/components/home/AuditTurnaround";
 import { JsonLd, breadcrumbLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Free Email & SMS Marketing Audit",
+  title: "Free Email & SMS Revenue Audit",
   description:
-    "Get a free, practical audit of your email and SMS marketing within 48 hours. We review flows, campaigns, SMS, segmentation, deliverability and creative, then send prioritised fixes.",
+    "Get a free, practical audit of your email and SMS within 48 hours. We review flows, campaigns, segmentation, deliverability and creative, then send prioritised recommendations.",
   alternates: { canonical: "/audit" },
-  openGraph: { url: "/audit", title: "Free Email & SMS Audit | Mailisto" },
+  openGraph: { url: "/audit", title: "Free Email & SMS Revenue Audit | Mailisto" },
 };
 
 const steps = [
   { t: "You send the basics", d: "Two short steps: who you are, and a little about your store." },
-  { t: "We take a proper look", d: "With view-only access to your platform (we can\u2019t change a thing), we go through your flows, campaigns, SMS, segments, deliverability and design." },
+  { t: "We review your account", d: "With a read-only user, we work through flows, campaigns, SMS, segments, deliverability and creative." },
   { t: "You get the findings in 48 hours", d: "Within 48 hours of access: a clear write-up with recommendations ranked by likely revenue impact and effort." },
 ];
 
@@ -27,13 +27,13 @@ export default function AuditPage() {
           <div className="hero-in lg:col-span-6 lg:row-start-1">
             <p className="label flex items-center gap-3 text-muted">
               <span aria-hidden="true" className="size-2 bg-lime ring-1 ring-ink/20" />
-              Free email &amp; SMS audit
+              Free email &amp; SMS revenue audit
             </p>
             <h1 className="mt-6 text-[clamp(2.4rem,1.5rem+3.6vw,4.4rem)] leading-[1.03] font-semibold">
-              Find the money your email and SMS are <span className="mark">leaving behind.</span>
+              Find the revenue your email program is <span className="mark">leaving behind.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              An honest, practical look at your email and SMS by people who only do email and SMS. Not a sales call wearing an audit costume.
+              A practical, specific review of your email and SMS by people who only do ecommerce email and SMS. Not a sales call dressed up as an audit.
             </p>
             <AuditTurnaround tone="light" className="mt-8 max-w-xl" />
           </div>

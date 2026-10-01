@@ -20,9 +20,8 @@ const columns = [
     title: "Services",
     links: [
       { label: "Email & SMS audits", href: "/audit" },
-      { label: "Automated flows", href: "/#services" },
+      { label: "Lifecycle flows", href: "/#services" },
       { label: "Email campaigns", href: "/#services" },
-      { label: "SMS marketing", href: "/#services" },
       { label: "Design & copywriting", href: "/#services" },
       { label: "Testing & reporting", href: "/#services" },
     ],
@@ -61,8 +60,9 @@ export async function Footer() {
           <div className="lg:col-span-5">
             <Logo tone="light" className="w-48" />
             <p className="mt-6 max-w-sm text-[1.05rem] leading-relaxed text-muted-dark">
-              An email and SMS marketing agency for Shopify brands. We make your
-              list do what it should have been doing all along: selling.
+              An email and SMS agency for Shopify brands. We build and run the
+              flows, campaigns and segmentation that turn your list into repeat
+              revenue.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -153,7 +153,8 @@ export async function Footer() {
 
         <div className="mt-8 flex flex-col gap-4 border-t border-line-dark pt-6 text-sm text-muted-dark sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}. Email &amp; SMS marketing for ecommerce.
+            © {new Date().getFullYear()} {site.name}. Email &amp; SMS marketing
+            for ecommerce.
           </p>
           <ul className="flex gap-6">
             <li>

@@ -2,18 +2,17 @@ import { AuditForm } from "../forms/AuditForm";
 import { AuditTurnaround } from "./AuditTurnaround";
 
 export const auditAreas = [
-  "Account & list health",
-  "Automated flows",
-  "Email campaigns",
-  "SMS program & consent",
+  "Account structure",
+  "Lifecycle flows",
+  "Campaign strategy",
   "Segmentation",
-  "Deliverability & spam risk",
-  "Design",
+  "Deliverability",
+  "Email design",
   "Copy & subject lines",
   "Revenue attribution",
-  "Missing automations",
-  "Repeat purchase & retention",
+  "Automation gaps",
   "Testing opportunities",
+  "Retention & repeat purchase",
 ];
 
 export function AuditChecklist({ tone = "dark" }: { tone?: "dark" | "light" }) {
@@ -38,13 +37,13 @@ export function AuditSection() {
             <p className="label flex items-center gap-3 text-muted-dark">
               <span className="text-lime">06</span>
               <span aria-hidden="true" className="h-px w-8 bg-line-dark" />
-              Free email &amp; SMS audit
+              Free email &amp; SMS revenue audit
             </p>
             <h2 id="audit-title" className="mt-5 text-h2 font-semibold">
-              Your email and SMS are probably hiding money. <span className="text-lime">Let&rsquo;s find it.</span>
+              Your email and SMS account probably has revenue <span className="text-lime">hiding in it.</span>
             </h2>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-dark">
-              Tell us about your store and we&rsquo;ll take an honest look at your email and SMS: what&rsquo;s working, what&rsquo;s broken, and what&rsquo;s quietly costing you sales.
+              Get a practical review of your email program. We&rsquo;ll show you where flows, campaigns, segmentation, deliverability and lifecycle strategy could be earning more.
             </p>
 
             <AuditTurnaround className="mt-10 max-w-lg" />
@@ -57,13 +56,13 @@ export function AuditSection() {
             <h3 className="label mt-12 text-white">What you get</h3>
             <ul className="mt-4 space-y-3 text-[0.95rem] text-white/85">
               <li className="flex gap-3">
-                <span className="text-lime">→</span>A plain-English review of what&rsquo;s working and what isn&rsquo;t, within 48 hours.
+                <span className="text-lime">→</span>A written review of what&rsquo;s working and what isn&rsquo;t, within 48 hours.
               </li>
               <li className="flex gap-3">
-                <span className="text-lime">→</span>Fixes ranked by how much money they could make, and how much effort they take.
+                <span className="text-lime">→</span>Recommendations ranked by likely revenue impact and effort.
               </li>
               <li className="flex gap-3">
-                <span className="text-lime">→</span>Next steps you can act on yourself, or with us. No pressure either way.
+                <span className="text-lime">→</span>Clear next steps you can act on, with or without us.
               </li>
             </ul>
           </div>
@@ -73,7 +72,7 @@ export function AuditSection() {
           <div className="mx-auto max-w-2xl px-5 py-16 sm:px-8 lg:mr-auto lg:ml-0 lg:py-28 lg:pl-16 lg:pr-12">
             <div className="reveal lg:sticky lg:top-28">
               <h3 className="text-2xl font-semibold tracking-tight">Request your free audit</h3>
-              <p className="mt-2 mb-8 text-muted">Two quick steps. About a minute. Less time than your coffee takes to cool down.</p>
+              <p className="mt-2 mb-8 text-muted">Two quick steps. About a minute. Findings within 48 hours.</p>
               <AuditForm idPrefix="home-audit" />
             </div>
           </div>
