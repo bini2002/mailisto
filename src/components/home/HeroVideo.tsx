@@ -4,18 +4,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { PiPauseFill, PiPlayFill, PiSpeakerHighFill, PiSpeakerSlashFill } from "react-icons/pi";
 import type { HeroVideo as HeroVideoData } from "@/lib/data";
 
-/** Starting frame: up to 560px wide (72% of small screens), 16:9. */
-const MAX_START_WIDTH = 560;
-const START_WIDTH_RATIO = 0.72;
+/** Starting frame on laptops and up: 560×315 (16:9). Must match `.hv-track` in globals.css. */
+const START_WIDTH = 560;
 const ASPECT = 9 / 16;
-/** The frame stops growing at 80% of the screen (below the sticky header). */
-const END_SCALE = 0.8;
-const START_RADIUS = 12;
-const END_RADIUS = 18;
-/** Fraction of the scroll track used for growing; the rest holds the finished frame. */
-const GROW_PORTION = 0.85;
-/** Smoothing time constant (ms): how softly the frame catches up with the scroll position. */
-const SMOOTHING_MS = 140;
+const RADIUS = 16;
+/** Fraction of the pinned scroll used for growing; the rest holds the finished (80%) frame. */
+const GROW_PORTION = 0.8;
+/** Smoothing time constant (ms) for the growth, so wheel steps turn into one soft motion. */
+const SMOOTHING_MS = 120;
+const DESKTOP = "(min-width: 1024px)";
 
 const clamp = (n: number, min = 0, max = 1) => Math.min(max, Math.max(min, n));
 const smoothstep = (t: number) => t * t * (3 - 2 * t);
@@ -26,10 +23,12 @@ const sourceType = (src: string) => {
 };
 
 /**
- * Hero video that starts as a small frame under the headline and grows to 80% of the screen as you scroll.
- * The frame is laid out once at its finished size; growth is a uniform scale of the video plus a
- * clip-path, and the motion is a transform, so scrolling never re-lays out or resizes the video.
- * A frame-rate independent ease on the scroll position keeps it smooth on wheels, trackpads and touch.
+ * Hero video.
+ * - Phones and tablets: a plain responsive 16:9 video under the copy, no scroll effect.
+ * - Laptops and up: a small frame under the copy that, once the stage pins, grows with the scroll to
+ *   80% of the screen. Position is pure CSS (sticky stage, centred frame), so it never fights the
+ *   browser's own scrolling; JS only sets the size, as a clip-path plus a uniform video scale, in
+ *   whole pixels, which keeps edges steady instead of shimmering.
  */
 export function HeroVideo({ video }: { video: HeroVideoData }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -44,71 +43,48 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
   const userPaused = useRef(false);
   const hasVideo = Boolean(video.src);
 
-  // ---- Scroll-linked growth -------------------------------------------------
+  // ---- Scroll-linked growth (laptops and up only) -----------------------------
   useEffect(() => {
     const track = trackRef.current;
-    const stage = stageRef.current;
     const frame = frameRef.current;
     const media = mediaRef.current;
-    if (!track || !stage || !frame || !media) return;
+    if (!track || !frame || !media) return;
 
+    const mq = window.matchMedia(DESKTOP);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let target = window.scrollY;
-    let current = target;
+    let target = 0;
+    let current = 0;
     let raf = 0;
     let last = 0;
-    let trackTop = 0;
-    let growEnd = 1;
-    let vw = 0;
-    let header = 0;
-    let avail = 0;
-    // Finished frame box (stage coordinates).
-    let W = 0;
+    let start = 0; // scroll position where the stage pins
+    let distance = 1; // scroll distance over which the frame grows
+    let W = 0; // finished frame
     let H = 0;
-    let L = 0;
-    let T = 0;
-    // The video box: 16:9, just big enough to cover the finished frame.
-    let MW = 0;
+    let MW = 0; // 16:9 video box covering the finished frame
     let MH = 0;
 
     const measure = () => {
       const rect = track.getBoundingClientRect();
-      trackTop = rect.top + window.scrollY;
-      const vh = stage.clientHeight;
-      vw = stage.clientWidth;
-      // A sticky site header covers the top of the stage; the frame is centred in the space below it.
-      const h = document.querySelector("header");
-      header = h && getComputedStyle(h).position !== "static" ? h.getBoundingClientRect().height : 0;
-      avail = vh - header;
-      growEnd = Math.max(1, (trackTop + rect.height - vh) * GROW_PORTION);
-      W = vw * END_SCALE;
-      H = avail * END_SCALE;
-      L = (vw - W) / 2;
-      T = header + (avail - H) / 2;
-      Object.assign(frame.style, { left: `${L}px`, top: `${T}px`, right: "auto", bottom: "auto", width: `${W}px`, height: `${H}px` });
-      MW = Math.max(W, H / ASPECT);
-      MH = MW * ASPECT;
-      Object.assign(media.style, { left: `${(W - MW) / 2}px`, top: `${(H - MH) / 2}px`, width: `${MW}px`, height: `${MH}px` });
+      start = rect.top + window.scrollY;
+      distance = Math.max(1, (rect.height - window.innerHeight) * GROW_PORTION);
+      W = frame.clientWidth;
+      H = frame.clientHeight;
+      MW = media.offsetWidth;
+      MH = media.offsetHeight;
     };
 
-    const paint = (y: number) => {
-      const e = smoothstep(clamp(y / growEnd));
-      const w0 = Math.min(MAX_START_WIDTH, vw * START_WIDTH_RATIO, W);
+    const progress = () => clamp((window.scrollY - start) / distance);
+
+    const paint = (p: number) => {
+      const e = smoothstep(p);
+      const w0 = Math.min(START_WIDTH, W);
       const h0 = Math.min(w0 * ASPECT, H);
       const w = w0 + (W - w0) * e;
       const h = h0 + (H - h0) * e;
-      // Rides up with the page directly under the hero copy until it reaches the centre, then holds there.
-      const stageTop = Math.max(0, trackTop - y);
-      const top = Math.max(0, header + (avail - h) / 2 - stageTop);
-      const dy = top + h / 2 - (T + H / 2);
-      const ix = (W - w) / 2;
-      const iy = (H - h) / 2;
-      const r = START_RADIUS + (END_RADIUS - START_RADIUS) * e;
-      frame.style.transform = `translate3d(0, ${dy}px, 0)`;
-      frame.style.clipPath = `inset(${iy}px ${ix}px round ${r}px)`;
-      // Uniform scale so the video covers the visible frame, never stretched. In the small 16:9
-      // frame this shows the whole shot; it only crops if the finished frame isn't 16:9 (phones).
-      media.style.transform = `scale(${Math.max(w / MW, h / MH)})`;
+      const ix = Math.round((W - w) / 2);
+      const iy = Math.round((H - h) / 2);
+      frame.style.clipPath = `inset(${iy}px ${ix}px round ${RADIUS}px)`;
+      media.style.transform = `scale(${Math.max((W - 2 * ix) / MW, (H - 2 * iy) / MH).toFixed(4)})`;
       if (controlsRef.current) controlsRef.current.style.transform = `translate3d(${-ix}px, ${-iy}px, 0)`;
     };
 
@@ -116,7 +92,7 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
       const dt = last ? Math.min(64, now - last) : 16;
       last = now;
       const diff = target - current;
-      current = Math.abs(diff) < 0.5 ? target : current + diff * (1 - Math.exp(-dt / SMOOTHING_MS));
+      current = Math.abs(diff) < 0.0008 ? target : current + diff * (1 - Math.exp(-dt / SMOOTHING_MS));
       paint(current);
       if (current === target) {
         raf = 0;
@@ -127,7 +103,7 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
     };
 
     const onScroll = () => {
-      target = window.scrollY;
+      target = progress();
       if (reduce) {
         current = target;
         paint(current);
@@ -138,18 +114,37 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
 
     const onResize = () => {
       measure();
-      target = current = window.scrollY;
+      target = current = progress();
       paint(current);
     };
 
-    onResize();
-    frame.classList.add("is-ready");
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    return () => {
+    const enable = () => {
+      onResize();
+      frame.classList.add("is-ready");
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onResize);
+    };
+
+    const disable = () => {
       cancelAnimationFrame(raf);
+      raf = 0;
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      frame.style.clipPath = "";
+      media.style.transform = "";
+      if (controlsRef.current) controlsRef.current.style.transform = "";
+    };
+
+    const sync = () => (mq.matches ? enable() : disable());
+    const onChange = () => {
+      disable();
+      sync();
+    };
+    sync();
+    mq.addEventListener("change", onChange);
+    return () => {
+      disable();
+      mq.removeEventListener("change", onChange);
     };
   }, []);
 
@@ -202,60 +197,57 @@ export function HeroVideo({ video }: { video: HeroVideoData }) {
   }, []);
 
   return (
-    <div ref={trackRef} className="relative h-[200vh] sm:h-[240vh]">
-      <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden">
-        <div
-          ref={frameRef}
-          // Laid out at its finished size by JS; hidden until then so nothing jumps on hydration.
-          className="hero-frame absolute inset-x-[10%] top-[10%] bottom-[10%] overflow-hidden bg-ink-3 will-change-transform"
-          style={{ clipPath: `inset(0px round ${END_RADIUS}px)` }}
-        >
-          <div ref={mediaRef} className="absolute inset-0 will-change-transform">
-            {hasVideo ? (
-              <video
-                ref={videoRef}
-                className="h-full w-full object-cover"
-                poster={video.poster}
-                muted
-                loop
-                playsInline
-                autoPlay
-                preload="metadata"
-                aria-label="Mailisto showreel"
-                onPlay={() => setPlaying(true)}
-                onPause={() => setPlaying(false)}
-                onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
-              >
-                {video.webm && <source src={video.webm} type="video/webm" />}
-                <source src={video.src!} type={sourceType(video.src!)} />
-              </video>
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={video.poster} alt="" className="h-full w-full object-contain" />
+    <div ref={trackRef} className="hv-track relative">
+      <div ref={stageRef} className="hv-stage">
+        <div className="container-x pb-14 lg:contents">
+          <div ref={frameRef} className="hv-frame">
+            <div ref={mediaRef} className="hv-media">
+              {hasVideo ? (
+                <video
+                  ref={videoRef}
+                  className="h-full w-full object-cover"
+                  poster={video.poster}
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  aria-label="Mailisto showreel"
+                  onPlay={() => setPlaying(true)}
+                  onPause={() => setPlaying(false)}
+                  onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
+                >
+                  {video.webm && <source src={video.webm} type="video/webm" />}
+                  <source src={video.src!} type={sourceType(video.src!)} />
+                </video>
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={video.poster} alt="" className="h-full w-full object-contain" />
+              )}
+            </div>
+            {hasVideo && (
+              <div ref={controlsRef} className="absolute right-3 bottom-3 flex gap-2 will-change-transform sm:right-4 sm:bottom-4">
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  aria-label={playing ? "Pause video" : "Play video"}
+                  className="inline-flex size-10 items-center justify-center rounded-full border border-white/25 bg-black/55 text-white backdrop-blur-sm transition-colors hover:border-lime hover:text-lime"
+                >
+                  {playing ? <PiPauseFill aria-hidden="true" className="size-4" /> : <PiPlayFill aria-hidden="true" className="size-4" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={toggleMute}
+                  aria-label={muted ? "Unmute video" : "Mute video"}
+                  aria-pressed={!muted}
+                  className="inline-flex h-10 items-center gap-2 rounded-full border border-white/25 bg-black/55 px-3.5 text-xs font-medium tracking-wide text-white uppercase backdrop-blur-sm transition-colors hover:border-lime hover:text-lime"
+                >
+                  {muted ? <PiSpeakerSlashFill aria-hidden="true" className="size-4" /> : <PiSpeakerHighFill aria-hidden="true" className="size-4" />}
+                  <span>{muted ? "Sound off" : "Sound on"}</span>
+                </button>
+              </div>
             )}
           </div>
-          {hasVideo && (
-            <div ref={controlsRef} className="absolute right-3 bottom-3 flex gap-2 will-change-transform sm:right-4 sm:bottom-4">
-              <button
-                type="button"
-                onClick={togglePlay}
-                aria-label={playing ? "Pause video" : "Play video"}
-                className="inline-flex size-10 items-center justify-center rounded-full border border-white/25 bg-black/55 text-white backdrop-blur-sm transition-colors hover:border-lime hover:text-lime"
-              >
-                {playing ? <PiPauseFill aria-hidden="true" className="size-4" /> : <PiPlayFill aria-hidden="true" className="size-4" />}
-              </button>
-              <button
-                type="button"
-                onClick={toggleMute}
-                aria-label={muted ? "Unmute video" : "Mute video"}
-                aria-pressed={!muted}
-                className="inline-flex h-10 items-center gap-2 rounded-full border border-white/25 bg-black/55 px-3.5 text-xs font-medium tracking-wide text-white uppercase backdrop-blur-sm transition-colors hover:border-lime hover:text-lime"
-              >
-                {muted ? <PiSpeakerSlashFill aria-hidden="true" className="size-4" /> : <PiSpeakerHighFill aria-hidden="true" className="size-4" />}
-                <span>{muted ? "Sound off" : "Sound on"}</span>
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
