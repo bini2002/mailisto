@@ -127,4 +127,4 @@ export interface HeroSlide {
   updated_at: string;
 }
 
-export type SiteSettings = Partial<Record<"contact_email" | "linkedin_url" | "instagram_url" | "x_url" | "calendly_url", string>>;
+export type SiteSettings = Partial<Record<"contact_email" | "linkedin_url" | "instagram_url" | "x_url" | "calendly_url" | "hero_video_url" | "hero_video_poster", string>>;

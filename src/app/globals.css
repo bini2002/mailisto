@@ -451,3 +451,76 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Hero dotted wave: a slow sideways drift, nothing more. */
+@media (prefers-reduced-motion: no-preference) {
+  .dot-wave {
+    animation: dot-drift 14s ease-in-out infinite alternate;
+  }
+}
+@keyframes dot-drift {
+  from {
+    transform: translate3d(-1.5%, 0, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(1.5%, -2%, 0) scale(1.05);
+  }
+}
+
+/* Hero video.
+   Phones and tablets: a plain 16:9 video. Laptops and up: a sticky stage whose frame starts at
+   560x315 directly under the hero copy and grows (via JS clip-path + scale) to 80% of the screen.
+   All positioning is CSS so it moves exactly with the browser's scroll; JS only sets the size. */
+.hv-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--color-ink-3);
+}
+.hv-media {
+  position: absolute;
+  inset: 0;
+}
+@media (min-width: 1024px) {
+  .hv-track {
+    --hv-header: 65px; /* sticky navbar: h-16 + 1px border */
+    height: 260vh;
+    /* Pull the stage up so its centred starting frame (315px tall) sits right under the copy. */
+    margin-top: calc(-1 * (var(--hv-header) + (100svh - var(--hv-header) - 315px) / 2));
+    pointer-events: none; /* the track overlaps the CTAs above; only the frame takes clicks */
+  }
+  .hv-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
+  .hv-frame {
+    position: absolute;
+    aspect-ratio: auto;
+    left: 10%;
+    width: 80%;
+    top: calc(var(--hv-header) + (100% - var(--hv-header)) * 0.1);
+    height: calc((100% - var(--hv-header)) * 0.8);
+    border-radius: 0; /* the clip-path carries the rounding */
+    pointer-events: auto;
+    contain: layout paint;
+    transition: opacity 0.6s ease;
+  }
+  html.js .hv-frame:not(.is-ready) {
+    opacity: 0;
+  }
+  .hv-media {
+    inset: auto;
+    left: 50%;
+    top: 50%;
+    width: max(100%, (100svh - var(--hv-header)) * 0.8 * 16 / 9);
+    aspect-ratio: 16 / 9;
+    translate: -50% -50%;
+    transform-origin: center;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+}
