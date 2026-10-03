@@ -524,3 +524,19 @@
     backface-visibility: hidden;
   }
 }
+
+/* "Tap for sound" nudge when the browser blocked sound on the hero video. */
+@media (prefers-reduced-motion: no-preference) {
+  .hv-sound-hint {
+    animation: hv-sound-pulse 1.8s ease-in-out infinite;
+  }
+}
+@keyframes hv-sound-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(184 250 60 / 0.55);
+  }
+  60% {
+    box-shadow: 0 0 0 10px rgb(184 250 60 / 0);
+  }
+}
